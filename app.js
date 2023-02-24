@@ -30,7 +30,7 @@ app.use('/api', productRoute);
 app.use('/api', userRoute);
 
 app.get('/', (req, res) => {
-    res.send('USSD Server is working')
+    res.send('USSD Server is working');
 });
 
 

@@ -35,7 +35,11 @@ exports.getProduct = [ async (req, res) => {
     try {
         const { id } = req.body;
         const product = await Product.findOne({barcode: id});
-        res.status(200).send(product);
+        if (!product) {
+            res.json('Incorrect Barcode or Product Doesnt Exist in Databae');
+        } else {
+            res.status(200).json({'product': product});
+        }
     } catch (err) {
         console.log(err);
     }
@@ -44,7 +48,7 @@ exports.getProduct = [ async (req, res) => {
 exports.getAllProducts = [ async (req, res) => {
     try {
         const products = await Product.find({});
-        res.status(200).send(products);
+        res.status(200).json({'products':products});
     } catch (err) {
         res.status(400).send('Service error, please try again is 15...');
     }
