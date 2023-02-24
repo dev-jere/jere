@@ -1,13 +1,14 @@
 const { default: mongoose } = require('mongoose');
-const { DATABASE_LOCAL } = process.env;
+const { DATABASE_URL } = process.env;
+
 
 exports.connect = () => {
     mongoose
-    .connect(DATABASE_LOCAL, {
+    .connect(DATABASE_URL, {
         useNewUrlParser: true,
     })
     .then(()=> {
-        console.log('Database Connection Successfull');
+        console.log('Database Connection Successful');
     })
     .catch((err)=> {
         console.log('Database Connection Failed');
