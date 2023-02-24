@@ -11,7 +11,7 @@ exports.createProduct = [async (req, res)=> {
         const product = await Product.findOne({barcode: barcode}); //Checking database if user already exists
 
         if (product) {
-            res.status(400).send('A farmer already exsist with this data...');
+            res.status(400).send('A product already exsist with this data...');
 
         } else {
             const newProduct = new Product({
@@ -24,10 +24,10 @@ exports.createProduct = [async (req, res)=> {
                 supplier_price
             });
             await newProduct.save();
-            res.status(201).send('Product Added successfully.')
+            res.send('Product Added successfully.');
         }
     } catch (err) {
-        res.status(500).send('Service not available at the moment, please try again in 15mins...');
+        console.log(err);
     }
 }]
 
@@ -35,9 +35,22 @@ exports.getProduct = [ async (req, res) => {
     try {
         const { id } = req.body;
         const product = await Product.findOne({barcode: id});
-        res.status(200).send(product);
+        if (!product) {
+            res.json('Incorrect Barcode or Product Doesnt Exist in Databae');
+        } else {
+            res.status(200).json({'product': product});
+        }
     } catch (err) {
-        res.send('Service error, please try again is 15mins...');
+        console.log(err);
+    }
+}]
+
+exports.getAllProducts = [ async (req, res) => {
+    try {
+        const products = await Product.find({});
+        res.status(200).json({'products':products});
+    } catch (err) {
+        res.status(400).send('Service error, please try again is 15...');
     }
 }]
 

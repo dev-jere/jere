@@ -14,7 +14,8 @@ const Farmer = new mongoose.Schema({
     },
     pin: {
         type: Number,
-        required: false
+        required: false,
+        default: 0000
     }
 });
 
