@@ -8,13 +8,18 @@ const User = new mongoose.Schema({
         required: true,
         type: String
     },
-    phone: {
+    email: {
         required: true,
-        type: Number
+        type: String
     },
-    pin: {
-        type: Number,
-        required: false
+    password: {
+        type: String,
+        required: true
+    },
+    role: {
+        type: String,
+        enum: ['basic', 'supervisor', 'admin'],
+        default: 'basic'
     }
 });
 
