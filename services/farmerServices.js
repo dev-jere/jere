@@ -28,3 +28,12 @@ exports.createFarmer = [async (req, res)=> {
     }
 }]
 
+exports.getFarmer = [async (req, res) => {
+    try {
+        const {phone} = req.body;
+        const farmer = await Farmer.findOne({phone: phone});
+        res.status(200).send(farmer);
+    } catch (err) {
+        res.status(500).send('Service not available at the moment, please try again in 15mins...');
+    }
+}]

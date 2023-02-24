@@ -13,10 +13,15 @@ const app = express();
 
 const port = 5050 || process.env.PORT;
 
+const farmerRoute = require('./controllers/farmerController');
+const ussdMenu = require('./controllers/ussdController');
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+
+app.use('/api', farmerRoute);
+app.use('/api', ussdMenu);
 
 app.get('/', (req, res) => {
     res.send('USSD Server is working')
