@@ -13,8 +13,9 @@ module.exports = menu => {
             } else {
                 for(var i = 0; i < seeds.length; i++)
                 {
-                    var product += i;
+                    var product = seeds[i++];
                     menu.con(`Seed available:`+
+                `\n${product.title}`+
                 `\n${product.title}`
         
         );
