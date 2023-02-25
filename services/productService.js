@@ -38,7 +38,7 @@ exports.getProduct = [ async (req, res) => {
         if (!product) {
             res.json('Incorrect Barcode or Product Doesnt Exist in Databae');
         } else {
-            res.status(200).json({'product': product});
+            res.status(200).json({product});
         }
     } catch (err) {
         console.log(err);
