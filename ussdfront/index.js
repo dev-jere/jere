@@ -11,10 +11,8 @@ menu.startState('home', {
                 menu.con(`Welcome back ${farmer.first_name},`+
                 "\n1. Seeds"+
                 "\n2. Chemicals"+
-                "\n3. Fertilizer"+
-                "\n4. Change Pin"
+                "\n3. Fertilizer"                
                 );
-
             } else {
                 menu.con(`Welcome to Nakore:`+
                 "\n0. Register"+
@@ -28,14 +26,11 @@ menu.startState('home', {
         '0': 'home.register',
         '1': 'home.seed',
         '2': 'home.chemical',
-        '3': 'home.fertilizer',
-        '4': 'home.settings',
+        '3': 'home.fertilizer'        
     },
-    defaultNext: "invalidOption",
-    
-});
-
-return menu;
+        defaultNext: "invalidOption",    
+    });
+    return menu;
 }
 
 

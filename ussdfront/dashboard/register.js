@@ -9,6 +9,7 @@ module.exports = menu => {
         next: {
             '0': 'home',
         },
+        defaultNext: "invalidOption",
     });
     menu.state('invalidOption', {
         run: () => {

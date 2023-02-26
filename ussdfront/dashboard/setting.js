@@ -1,8 +1,4 @@
 
-
-const Products = require ('../../models/productModel');
-const ProductService = require('../../services/productService');
-
 module.exports = menu => {
     menu.state("home.settings", {
         run: async () => {
@@ -11,6 +7,7 @@ module.exports = menu => {
         next: {
             '0': 'home',
         },
+        defaultNext: "invalidOption",
     });
     menu.state('invalidOption', {
         run: () => {
