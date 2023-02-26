@@ -9,7 +9,7 @@ menu.startState('home', {
             const farmer = await Farmer.findOne({phone: phoneNumber});
             if(farmer) {
                 menu.con(`Welcome back ${farmer.first_name},`+
-                "\n1. Seedling"+
+                "\n1. Seeds"+
                 "\n2. Chemicals"+
                 "\n3. Fertilizer"+
                 "\n4. Change Pin"
@@ -29,7 +29,7 @@ menu.startState('home', {
         '1': 'home.seed',
         '2': 'home.chemical',
         '3': 'home.fertilizer',
-        '4': 'home.pin',
+        '4': 'home.settings',
     },
     defaultNext: "invalidOption",
     

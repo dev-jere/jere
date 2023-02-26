@@ -48,9 +48,17 @@ exports.getProduct = [ async (req, res) => {
 exports.getAllProducts = [ async (req, res) => {
     try {
         const products = await Product.find({});
-        res.status(200).json({'products':products});
+        res.status(200).json({products});
     } catch (err) {
         res.status(400).send('Service error, please try again is 15...');
     }
 }]
 
+exports.getSeeds = [ async (req, res) => {
+    try {
+        const products = await Product.find({category: "Seed"});
+        res.status(200).json({'products':products});
+    } catch (err) {
+        res.status(400).send('Service error, please try again is 15...');
+    }
+}]

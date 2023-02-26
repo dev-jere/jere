@@ -8,6 +8,7 @@ require('dotenv').config(); //Environment Varialble Management
 require('./config/db').connect(); //Database Connection
 const express = require('express'); //Express Server
 const cors = require('cors');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const app = express();
 
@@ -18,7 +19,8 @@ const ussdMenu = require('./controllers/ussdController');
 const productRoute = require('./controllers/productController');
 const userRoute = require('./controllers/userController');
 
-
+app.use(helmet());
+app.use(helmet.xssFilter());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
