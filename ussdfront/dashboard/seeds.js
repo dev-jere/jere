@@ -4,16 +4,13 @@ const ProductService = require('../../services/productService');
 module.exports = menu => {
     menu.state("home.seed", {
         run: async () => {
-            const seeds = await Products.find({category: "Seed"});
-            let name_list =[];
-            let num;
-            //let products = seeds["products"];
-            for(let i=0; i< seeds.length; i++){
-                name_list.push(`\n`+(i+1).toString()+`. ` +seeds[i]["title"]);
-                num+= i;
+            const input = await Products.find({category: "Seed"});            
+            let seeds="";            
+            for(let i=0; i< input.length; i++){
+                seeds += (`\n`+[i.toString()]+" : "+ input[i]["title"]); 
             }
             menu.con(`Fertilizers available:`+
-                `${name_list}`
+                `${seeds}`
             );
             },
             next: {

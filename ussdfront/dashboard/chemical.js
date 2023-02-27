@@ -1,20 +1,18 @@
-
-
 const Products = require ('../../models/productModel');
-const ProductService = require('../../services/productService');
-
 
 module.exports = menu => {
     menu.state("home.chemical", {
         run: async () => {
-            const seeds = await Products.find({category: "Chemical"});
-            let name_list =[];
+            const input = await Products.find({category: "Herbicide"});
+            let herbicide =[];
+            let num;
             //let products = seeds["products"];
-            for(let i=0; i< seeds.length; i++){
-                name_list.push((i+1).toString()+seeds[i]["title"]);
+            for(let i=0; i< input.length; i++){
+                herbicide.push(`\n`+(i+1).toString()+`. ` +input[i]["title"]);
+                num+= i;
             }
-            menu.con(`Seed available:`+
-                `\n${name_list}`
+            menu.con(`Chemicals available:`+
+                `${herbicide}`
             );
             },
             next: {

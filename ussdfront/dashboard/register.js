@@ -1,6 +1,4 @@
 
-
-
 module.exports = menu => {
     menu.state("home.settings", {
         run: async () => {

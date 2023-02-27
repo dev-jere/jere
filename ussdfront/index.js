@@ -10,14 +10,14 @@ menu.startState('home', {
             if(farmer) {
                 menu.con(`Welcome back ${farmer.first_name},`+
                 "\n1. Seeds"+
-                "\n2. Chemicals"+
+                "\n2. Herbicide"+
                 "\n3. Fertilizer"                
                 );
             } else {
                 menu.con(`Welcome to Nakore:`+
                 "\n0. Register"+
                 "\n1. Seed"+
-                "\n2. Chemicals"+
+                "\n2. Herbicide"+
                 "\n3. Fertilizer"                
                 )                
             }            
@@ -25,7 +25,7 @@ menu.startState('home', {
     next: {
         '0': 'home.register',
         '1': 'home.seed',
-        '2': 'home.chemical',
+        '2': 'home.herbicide',
         '3': 'home.fertilizer'        
     },
         defaultNext: "invalidOption",    

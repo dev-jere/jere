@@ -18,7 +18,7 @@ exports.createFarmer = [async (req, res)=> {
                 first_name,
                 last_name,
                 phone,
-                pin: 0000
+                pin
             });
             await newFarmer.save();
             res.status(201).send('Farmer registered successfully.')
