@@ -8,7 +8,7 @@ const User = require('../models/userModel'); //Farmer model
 
 
 //Register a new Farmer for USSD Access
-exports.createUser = [async (req, res)=> {
+exports.createUser = [async (req, res, next)=> {
     try {
         const { first_name, last_name, email, password, role } = req.body;
 
