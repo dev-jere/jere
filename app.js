@@ -12,7 +12,7 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const app = express();
 
-const port = process.env.PORT || 5050;
+const port = process.env.PORT;
 
 const farmerRoute = require('./controllers/farmerController');
 const ussdMenu = require('./controllers/ussdController');
