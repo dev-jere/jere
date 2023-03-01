@@ -12,7 +12,7 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const app = express();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 const farmerRoute = require('./controllers/farmerController');
 const ussdMenu = require('./controllers/ussdController');
@@ -22,6 +22,7 @@ const userRoute = require('./controllers/userController');
 app.use(helmet());
 app.use(helmet.xssFilter());
 app.use(cors());
+app.use(bodyParser.json({ type: 'application/*+json' }))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
