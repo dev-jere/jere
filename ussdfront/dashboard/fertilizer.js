@@ -17,10 +17,56 @@ module.exports = menu => {
             );
             },
             next: {
-            '0': 'home',
+                "1":"home.fertilizer.super"
+                
         },
         defaultNext: "invalidOption",
     });
+
+    menu.state('home.fertilizer.super', {
+        run: async () => {
+            const input = await Products.find({category: "Fertilizer"});
+            let fertilizer =[];
+            for(let i=0; i< input.length; i++){
+                fertilizer.push(input[i]["title"]);
+            }
+            const {
+                val
+            } = menu;
+            const roundup = JSON.parse(val);         
+                menu.con(`How many ${fertilizer[0]} do you want?`);
+           
+        },
+        next: {
+            "*\\d":"home.fertilizer.pay",
+        },
+        defaultNext: "invalidOption",
+    });
+
+    menu.state('home.fertilizer.pay', {
+        run: async () => {
+            const input = await Products.find({category: "Fertilizer"});
+            let fertilizer =[];
+            for(let i=0; i< input.length; i++){
+                fertilizer.push(input[i]["title"]);
+            }
+            const {
+                val,
+                args: { phoneNumber }
+            } = menu;
+                qty = JSON.parse(val)
+                const total = qty * 11200
+                menu.con(`Total: ${qty} x 12,200 = 
+                N${total}. Proceed to payment?`);
+    
+        },
+        next: {
+            "\\d":"home.chemical.pay"
+        },
+        defaultNext: "invalidOption",
+    });
+
+
     menu.state('invalidOption', {
         run: () => {
             menu.end(`Invalid option`);
