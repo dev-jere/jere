@@ -51,7 +51,14 @@ exports.createUser = [async (req, res, next)=> {
 
 }
 }]
-
+exports.allUser =[auth, async (req, res)=> {
+    try {
+        const users = await User.find({});
+        res.status(200).send(users);
+    } catch (err) {
+        console.log(err);
+    }
+}]
 exports.login = [async (req, res) => {
     try {
         const {email, password} = req.body;
