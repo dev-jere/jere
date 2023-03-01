@@ -61,7 +61,7 @@ module.exports = menu => {
     
         },
         next: {
-            "\\d":"home.chemical.pay"
+            "2":"home.chemical.pay"
         },
         defaultNext: "invalidOption",
     });
