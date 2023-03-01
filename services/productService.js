@@ -1,11 +1,12 @@
 /**
  * This is the product service
  */
+const auth = require('../middleware/auth')
 const Product = require('../models/productModel'); //Farmer model
 
 
 //Register a new Farmer for USSD Access
-exports.createProduct = [async (req, res)=> {
+exports.createProduct = [auth, async (req, res)=> {
     try {
         const { title, description, quantity, category, barcode, price, supplier_price } = req.body;
         const product = await Product.findOne({barcode: barcode}); //Checking database if user already exists
@@ -54,7 +55,7 @@ exports.getAllProducts = [ async (req, res) => {
     }
 }]
 
-exports.getSeeds = [ async (req, res) => {
+exports.getSeeds = [async (req, res) => {
     try {
         const products = await Product.find({category: "Seed"});
         res.status(200).json({'products':products});
