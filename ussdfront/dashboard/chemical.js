@@ -16,7 +16,7 @@ module.exports = menu => {
             );
             },
             next: {
-            '0': 'home',
+            "*\\d":"home.chemical."
         },
         defaultNext: "invalidOption",
     });
