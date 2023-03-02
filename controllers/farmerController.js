@@ -6,7 +6,7 @@ const farmerController = require('../services/farmerServices');
 
 
 router.post('/register', farmerController.createFarmer);
-router.post('/getfarmer', farmerController.getFarmer);
+router.get('/getfarmer', farmerController.getFarmers);
 
 
 
