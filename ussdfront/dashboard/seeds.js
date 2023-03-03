@@ -99,7 +99,10 @@ module.exports = menu => {
                 qty = JSON.parse(val)
                 const total = qty * 3200
                 menu.con(`Total: ${qty} x 3200 = 
-                N${total}. Proceed to payment?`);
+                N${total}. Proceed to payment?`+
+                `\n1. Cash`+
+                `\n2. Wallet`+
+                `\n3. Airtime`);
     
         },
         next: {
@@ -108,7 +111,7 @@ module.exports = menu => {
         defaultNext: "invalidOption",
     });
 
-    //Faro Pay
+    //Hybrid Pay
     menu.state('home.hybrid.pay', {
         run: async () => {
             const input = await Products.find({category: "Seed"});
@@ -123,7 +126,10 @@ module.exports = menu => {
                 qty = JSON.parse(val)
                 const total = qty * 3200
                 menu.con(`Total: ${qty} x 3200 = 
-                N${total}. Proceed to payment?`);
+                N${total}. Proceed to payment?`+
+                `\n1. Cash`+
+                `\n2. Wallet`+
+                `\n3. Airtime`);
     
         },
         next: {
@@ -132,7 +138,7 @@ module.exports = menu => {
         defaultNext: "invalidOption",
     });
 
-    //Faro Pay
+    //Oba Pay
     menu.state('home.oba.pay', {
         run: async () => {
             const input = await Products.find({category: "Seed"});
@@ -147,7 +153,10 @@ module.exports = menu => {
                 qty = JSON.parse(val)
                 const total = qty * 3200
                 menu.con(`Total: ${qty} x 3200 = 
-                N${total}. Proceed to payment?`);
+                N${total}. Proceed to payment?`+
+                `\n1. Cash`+
+                `\n2. Wallet`+
+                `\n3. Airtime`);
     
         },
         next: {

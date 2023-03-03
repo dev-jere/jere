@@ -2,6 +2,7 @@ const { round } = require('lodash');
 const Products = require ('../../models/productModel');
 const sessions = {};
 module.exports = menu => {
+    //Nakore Chemical Listing Menu
     menu.state("home.chemical", {
         run: async () => {
             const {val, args: { phoneNumber }} = menu;
@@ -24,6 +25,7 @@ module.exports = menu => {
         defaultNext: "invalidOption",
     });
 
+    //Roundup Herbicide Selection
     menu.state('home.chemical.roundup', {
         run: async () => {
             const input = await Products.find({category: "Herbicide"});
@@ -43,6 +45,7 @@ module.exports = menu => {
         },
         defaultNext: "invalidOption",
     });
+    //Roundup Atrazine Selection
     menu.state('home.chemical.atrazine', {
         run: async () => {
             const input = await Products.find({category: "Herbicide"});
@@ -61,7 +64,7 @@ module.exports = menu => {
         },
         defaultNext: "invalidOption",
     });
-
+    //Shopping Summary for Roundup Selection
     menu.state('home.round.pay', {
         run: async () => {
             const input = await Products.find({category: "Herbicide"});
@@ -76,7 +79,10 @@ module.exports = menu => {
                 qty = JSON.parse(val)
                 const total = qty * 1200
                 menu.con(`Total: ${qty} x 1200 = 
-                N${total}. Proceed to payment?`);
+                N${total}. Proceed to payment?`+
+                `\n1. Cash`+
+                `\n2. Wallet`+
+                `\n3. Airtime`);
     
         },
         next: {
@@ -84,7 +90,7 @@ module.exports = menu => {
         },
         defaultNext: "invalidOption",
     });
-
+    //Shopping Summary for Roundup Selection
     menu.state('home.atraz.pay', {
         run: async () => {
             const input = await Products.find({category: "Herbicide"});
@@ -99,7 +105,10 @@ module.exports = menu => {
                 qty = JSON.parse(val)
                 const total = qty * 1200
                 menu.con(`Total: ${qty} x 1800 = 
-                N${total}. Proceed to payment?`);
+                N${total}. Proceed to payment?`+
+                `\n1. Cash`+
+                `\n2. Wallet`+
+                `\n3. Airtime`);
     
         },
         next: {

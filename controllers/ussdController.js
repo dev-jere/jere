@@ -16,7 +16,4 @@ router.post('/ussd', (req, res) => {
     })
 })
 
-
-
-
 module.exports = router;

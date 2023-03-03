@@ -57,7 +57,10 @@ module.exports = menu => {
                 qty = JSON.parse(val)
                 const total = qty * 11200
                 menu.con(`Total: ${qty} x 12,200 = 
-                N${total}. Proceed to payment?`);
+                N${total}. Proceed to payment?`+
+                `\n1. Cash`+
+                `\n2. Wallet`+
+                `\n3. Airtime`);
     
         },
         next: {
