@@ -30,7 +30,7 @@ module.exports = menu => {
     });
     menu.state("home.register.lga", {
         run: async () => {
-            menu.end(`Enter LGA:`);             
+            menu.con(`Enter LGA:`);             
         },
         next: {
             "*\\w": "home.register",
