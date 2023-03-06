@@ -1,11 +1,39 @@
+//import Farmer = require('../../models/farmerModel');
 
 module.exports = menu => {
-    menu.state("home.settings", {
+    menu.state("home.register", {
         run: async () => {
-            menu.con(`Service under construction`);             
+            menu.con(`Enter Firstname:`);             
         },
         next: {
-            '0': 'home',
+            "*\\w": "home.register.surname",
+        },
+        defaultNext: "invalidOption",
+    });
+    menu.state("home.register.surname", {
+        run: async () => {
+            menu.con(`Enter Surname:`);             
+        },
+        next: {
+            "*\\w": "home.register.state",
+        },
+        defaultNext: "invalidOption",
+    });
+    menu.state("home.register.state", {
+        run: async () => {
+            menu.con(`Enter State:`);             
+        },
+        next: {
+            "*\\w": "home.register.lga",
+        },
+        defaultNext: "invalidOption",
+    });
+    menu.state("home.register.lga", {
+        run: async () => {
+            menu.end(`Enter LGA:`);             
+        },
+        next: {
+            "*\\w": "home.register",
         },
         defaultNext: "invalidOption",
     });

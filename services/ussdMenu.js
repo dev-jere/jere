@@ -5,7 +5,7 @@ const seeds = require('../ussdfront/dashboard/seeds');
 //const settings = require('../ussdfront/dashboard/setting');
 const chemical = require('../ussdfront/dashboard/chemical');
 const fertilizer = require('../ussdfront/dashboard/fertilizer');
-//const register = require('../ussdfront/dashboard/register');
+const register = require('../ussdfront/dashboard/register');
 
 const Farmer = require('../models/farmerModel');
 const menu = new UssdMenu();
@@ -45,5 +45,5 @@ exports.Menu = [(req, res) => {
     menu.run(req.body, result => {
         res.send(result);
     })
-    _.over([seeds, fertilizer, chemical])(menu);
+    _.over([seeds, fertilizer, chemical, register])(menu);
 }]
