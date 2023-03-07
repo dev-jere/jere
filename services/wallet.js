@@ -8,7 +8,16 @@ const Flutterwave = require("flutterwave-node-v3");
 const flw = new Flutterwave(process.env.FLUTTERWAVE, process.env.FLUTTERWAVE_SECRET);
 
 
-//Payment to wallet response Logic.
+//Payment with USSD
+
+
+
+
+
+
+
+
+//Payment to wallet response Logic with Card.
 exports.payment = [ async (req, res) => {
     const { transaction_id } = req.body;
     
@@ -33,7 +42,7 @@ exports.payment = [ async (req, res) => {
     }
 
     //Check if Farmer exists in database
-    const user = await Farmer.findOne({email: customer.email});
+    const user = await Farmer.findOne({phone: customer.phone_number});
 
     //Check if Farmer has a wallet, else create a wallet
     const wallet = await validateUserWallet(user);
