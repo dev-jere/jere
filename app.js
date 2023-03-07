@@ -34,6 +34,8 @@ app.use('/api', productRoute);
 app.use('/api', userRoute);
 app.use('/api', payment);
 
+
+
 app.get('/', (req, res) => {
     res.send('USSD Server is working');
 });

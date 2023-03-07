@@ -9,8 +9,28 @@ const flw = new Flutterwave(process.env.FLUTTERWAVE, process.env.FLUTTERWAVE_SEC
 
 
 //Payment with USSD
+exports.payWithUssd = [async (req, res) => {
+    const payload = {
+        account_bank: '058',
+    amount: 7500,
+    currency: 'NGN',
+    email: 'chunkylover53@aol.com',
+    tx_ref: "356486875",
+    fullname: 'Homer Simpson',
+    }
+    flw.Charge.ussd(payload)
+    .then(console.log)
+    .catch(console.log);
+    
+}]
 
+exports.flwHook = [(req, res) => {
+    const payload = req.body;
+    log(payload);
 
+    transactionVerificationQueue.add({id: req.body.data.id});
+    res.status(200).end();
+}]
 
 
 
