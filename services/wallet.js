@@ -13,14 +13,13 @@ const flw = new Flutterwave(process.env.FLUTTERWAVE, process.env.FLUTTERWAVE_SEC
 //Payment with USSD
 exports.payWithUssd = [async (req, res) => {
     
-    uuidv4();
     const payload = {
-        account_bank: '058',
-    amount: 7500,
-    currency: 'NGN',
-    email: 'chunkylover53@aol.com',
-    tx_ref: uuidv4(),
-    fullname: 'Homer Simpson',
+        account_bank: '011',
+        amount: 7500,
+        currency: 'NGN',
+        email: 'chunkylover53@aol.com',
+        tx_ref: uuidv4(),
+        fullname: 'Homer Simpson',
     }
 
     console.log(uuidv4());
@@ -30,11 +29,11 @@ exports.payWithUssd = [async (req, res) => {
         res.status(503).send("Payment Failed");
     } else {
         const ussdCode = response.meta.authorization.note;
-    const paymentCode = response.payment_code;
-    res.send(`
-        To complete the payment, dial <strong>${ussdCode}</strong> from the mobile number linked to your bank account.
-        If you're prompted for a payment code, enter <strong>${paymentCode}</strong>.
-    `);
+        const paymentCode = response.payment_code;
+        res.send(`
+            To complete the payment, dial <strong>${ussdCode}</strong> from the mobile number linked to your bank account.
+            If you're prompted for a payment code, enter <strong>${paymentCode}</strong>.
+        `);
     }    
 }]
 
