@@ -3,7 +3,7 @@ const Wallet = require("../models/wallet");
 const Farmer = require("../models/farmerModel");
 const WalletTransaction = require("../models/wallet_transaction");
 const Transaction = require("../models/transaction");
-const Flutterwave = require("flutterwave-node-v3");
+const Flutterwave = require("flutterwave-node-v3"); 
 
 const flw = new Flutterwave(process.env.FLUTTERWAVE, process.env.FLUTTERWAVE_SECRET);
 
