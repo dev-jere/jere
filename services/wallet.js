@@ -5,25 +5,40 @@ const WalletTransaction = require("../models/wallet_transaction");
 const Transaction = require("../models/transaction");
 const Flutterwave = require("flutterwave-node-v3"); 
 
+const { v4: uuidv4 } = require('uuid');
+
 const flw = new Flutterwave(process.env.FLUTTERWAVE, process.env.FLUTTERWAVE_SECRET);
 
 
 //Payment with USSD
 exports.payWithUssd = [async (req, res) => {
+    
+    uuidv4();
     const payload = {
         account_bank: '058',
     amount: 7500,
     currency: 'NGN',
     email: 'chunkylover53@aol.com',
-    tx_ref: "356486875",
+    tx_ref: uuidv4(),
     fullname: 'Homer Simpson',
     }
-    flw.Charge.ussd(payload)
-    .then(console.log)
-    .catch(console.log);
-    
+
+    console.log(uuidv4());
+
+    const response = await flw.Charge.ussd(payload);
+    if (response.status !== 'success') {
+        res.status(503).send("Payment Failed");
+    } else {
+        const ussdCode = response.meta.authorization.note;
+    const paymentCode = response.payment_code;
+    res.send(`
+        To complete the payment, dial <strong>${ussdCode}</strong> from the mobile number linked to your bank account.
+        If you're prompted for a payment code, enter <strong>${paymentCode}</strong>.
+    `);
+    }    
 }]
 
+//Flutterwave webhook
 exports.flwHook = [(req, res) => {
     const payload = req.body;
     log(payload);
@@ -32,14 +47,16 @@ exports.flwHook = [(req, res) => {
     res.status(200).end();
 }]
 
+//Pay Direct from Bank Account
+exports.bankPayment = [async (req, res) => {
 
-
+}]
 
 
 
 //Payment to wallet response Logic with Card.
 exports.payment = [ async (req, res) => {
-    const { transaction_id } = req.body;
+    const transaction_id = uuidv4();
     
     const url = `https://api.flutterwave.com/v3/transactions/${transaction_id}/verify`;
     const response = await axios({
