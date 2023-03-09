@@ -47,8 +47,23 @@ exports.flwHook = [(req, res) => {
 }]
 
 //Pay Direct from Bank Account
-exports.bankPayment = [async (req, res) => {
+exports.ghanaPayment = [async (req, res) => {
+    try {
+        const payload = {
+            phone_number: '054709929220',
+            type: "mobile_money_ghana",
+            amount: 1500,
+            currency: 'GHS',
+            network: "TIGO",
+            email: 'JoeBloggs@acme.co',
+            tx_ref: uuidv4(),     
 
+        }
+        const response = await flw.MobileMoney.ghana(payload)
+        res.status(200).json(response);
+    } catch (err) {
+        console.log(err);
+    }
 }]
 
 
