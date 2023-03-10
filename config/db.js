@@ -3,10 +3,10 @@ const { DATABASE_LIVE } = process.env;
 
 
 exports.connect = () => {
-    mongoose
+    mongoose.set('strictQuery', false)
     .connect(DATABASE_LIVE, {
         useNewUrlParser: true,
-    })
+    })    
     .then(()=> {
         console.log('Database Connection Successful');
     })
