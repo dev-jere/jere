@@ -3,24 +3,34 @@ const mongoose = require("mongoose");
 const transactionSchema = new mongoose.Schema({
         userId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref:"user",
+            ref:"User",
         },
         transactionId: {
-            type: Number,
+            required: [true, "transactionId is Missing"],
+            type: String,
             trim: true,
         },
         name: {
             type: String,
-            required: [true, "name is required"],
+            trim: true,
+        },
+        state: {
+            required: true,
+            type: String,
+            trim: true,
+        },
+        lga: {
+            required: true,
+            type: String,
             trim: true,
         },
         email: {
-            type: String,
-            required: [true, "email is required"],
+            type: String,            
             trim: true,
         },
         phone: {
             type: String,
+            required: true,
         },
         amount: {
             type: Number,
@@ -28,8 +38,9 @@ const transactionSchema = new mongoose.Schema({
         },
         currency: {
             type: String,
-            enum: ["NGN","USD","EUR", "GBP"],
-            required: [true, "Currncy is required"],            
+            enum: ["NGN", "USD", "EUR", "GBP"],
+            required: [true, "Currncy is required"],
+            default: "NGN",
         },
         paymentStatus: {
             type: String,
@@ -38,7 +49,6 @@ const transactionSchema = new mongoose.Schema({
         },
         paymentGateway: {
             type: String,
-            required: [true, "payment gateway is required"],
             enum: ["flutterwave"],
         },
     },

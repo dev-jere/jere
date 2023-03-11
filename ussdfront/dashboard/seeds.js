@@ -1,5 +1,7 @@
 const Products = require ('../../models/productModel');
 const { v4: uuidv4 } = require('uuid');
+const transaction = require('../../models/transaction');
+const client = require("twilio")(process.env.accountSid, process.env.authToken);
 let sessions = {};
 module.exports = menu => {
     menu.state("home.seed", {
@@ -104,7 +106,7 @@ module.exports = menu => {
     menu.state('home.seed.select.lga', {
         run: async () => {
             const { val } = menu
-            sessions["lga"] = val
+            sessions["state"] = val
             console.log("Entered value: " + val);
             if (val === "adamawa") {
                 menu.con("Please enter your Local Government:");
@@ -116,7 +118,7 @@ module.exports = menu => {
                 menu.con("Please enter your Local Government:");
             }
             else {
-                menu.end(`Our service haven't reach your area yet.
+                menu.end(`Our service hasn't reached your area yet.
                 \nPlease call +2347033009900 to order`)
             }                       
         },
@@ -128,6 +130,7 @@ module.exports = menu => {
 
     menu.state('home.seed.select.lga.summary', {
         run: async () => {
+            
             const qty = sessions.qty
             const input = await Products.find({category: "Seed"});
             let seed =[];
@@ -137,8 +140,10 @@ module.exports = menu => {
             const {
                 val,
                 args: { phoneNumber }
-            } = menu;                
+            } = menu;
+            sessions["lga"]= val;                
                 const total = qty * 3200
+                sessions["amount"] = JSON.parse(total);
                 menu.con(`Total: ${qty} x 3200 = 
                 N${total}. Proceed to payment?`+
                 `\n1. Cash`+
@@ -156,11 +161,30 @@ module.exports = menu => {
     //Payment
     menu.state('home.seed.pay',{
         run :async()=> {
-            const { val, args } = menu
+            const { val, args:{phoneNumber} } = menu
             const transactionId = uuidv4();
-            menu.end(`Order completed`+
+            const qty = sessions.qty
+            const amount = qty * 3200;
+            const phone = phoneNumber;
+            const lga = sessions.lga;
+            const state = sessions.state;
+            
+            try {
+                const invoice = new transaction({
+                    transactionId, phone, amount, state, lga
+                })
+                await invoice.save();
+                client.messages
+                .create({body: `Your order ${transactionId} is ready for pick-up`, from: "+15673390650", to: phoneNumber})
+                .then(message => console.log(message.status));
+                menu.end(`Order completed`+
             `\n Ref: ${transactionId}`+
             `\n Pickup location to be shared via sms`);
+            } catch (err) {
+                menu.end("Sorry, transaction failed")
+                console.log(err)
+            }
+            
         }
     })
 
