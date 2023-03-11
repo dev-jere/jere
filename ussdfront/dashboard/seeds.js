@@ -1,7 +1,5 @@
 const Products = require ('../../models/productModel');
-const ProductService = require('../../services/productService');
-const States = require('../../statesAndLga.json');
-const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');
 let sessions = {};
 module.exports = menu => {
     menu.state("home.seed", {
@@ -61,7 +59,7 @@ module.exports = menu => {
            
         },
         next: {
-            "*\\d":"home.seed.select.state",
+            "*\\w":"home.seed.select.state",
         },
         defaultNext: "invalidOption",
     });
@@ -77,12 +75,12 @@ module.exports = menu => {
             const {
                 val
             } = menu;
-            const roundup = JSON.parse(val);         
-                menu.con(`How many ${seed[2]} do you want?`);
+            sessions["item"] = seed;
+            menu.con(`How many ${seed[2]} do you want?`);
            
         },
         next: {
-            "*\\d":"home.seed.select.state",
+            "*\\w":"home.seed.select.state",
         },
         defaultNext: "invalidOption",
     });
@@ -91,6 +89,7 @@ module.exports = menu => {
     menu.state('home.seed.select.state', {
         run: async () => {
             const {val } = menu;
+            sessions["qty"] = val;
             
             menu.con("Please enter State");
            
@@ -105,6 +104,7 @@ module.exports = menu => {
     menu.state('home.seed.select.lga', {
         run: async () => {
             const { val } = menu
+            sessions["lga"] = val
             console.log("Entered value: " + val);
             if (val === "adamawa") {
                 menu.con("Please enter your Local Government:");
@@ -121,10 +121,48 @@ module.exports = menu => {
             }                       
         },
         next: {
-            "*\\d":"home.faro.pay"
+            "*\\w":"home.seed.select.lga.summary"
         },
         defaultNext: "invalideOption",
     });
+
+    menu.state('home.seed.select.lga.summary', {
+        run: async () => {
+            const qty = sessions.qty
+            const input = await Products.find({category: "Seed"});
+            let seed =[];
+            for(let i=0; i < input.length; i++){
+                seed.push(input[i]["title"]);
+            }
+            const {
+                val,
+                args: { phoneNumber }
+            } = menu;                
+                const total = qty * 3200
+                menu.con(`Total: ${qty} x 3200 = 
+                N${total}. Proceed to payment?`+
+                `\n1. Cash`+
+                `\n2. Wallet`+
+                `\n3. Airtime`);
+        },
+        next: {
+            "1": "home.seed.pay",
+            "2":"home.chemical.pay"
+        },
+        defaultNext: "invalidOption",
+
+    })
+
+    //Payment
+    menu.state('home.seed.pay',{
+        run :async()=> {
+            const { val, args } = menu
+            const transactionId = uuidv4();
+            menu.end(`Order completed`+
+            `\n Ref: ${transactionId}`+
+            `\n Pickup location to be shared via sms`);
+        }
+    })
 
     //Faro Pay
     menu.state('home.faro.pay', {
