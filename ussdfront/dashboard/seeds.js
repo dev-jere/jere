@@ -1,6 +1,8 @@
 const Products = require ('../../models/productModel');
 const ProductService = require('../../services/productService');
-
+const States = require('../../statesAndLga.json');
+const axios = require('axios');
+let sessions = {};
 module.exports = menu => {
     menu.state("home.seed", {
         run: async () => {
@@ -37,11 +39,12 @@ module.exports = menu => {
            
         },
         next: {
-            "*\\d":"home.faro.pay",
+            "*\\d":"home.seed.select.state",
         },
         defaultNext: "invalidOption",
     });
 
+    
     //Select Seed Co Maize Hybrid
     menu.state('home.seed.hybrid', {
         run: async () => {
@@ -58,7 +61,7 @@ module.exports = menu => {
            
         },
         next: {
-            "*\\d":"home.hybrid.pay",
+            "*\\d":"home.seed.select.state",
         },
         defaultNext: "invalidOption",
     });
@@ -79,9 +82,48 @@ module.exports = menu => {
            
         },
         next: {
-            "*\\d":"home.oba.pay",
+            "*\\d":"home.seed.select.state",
         },
         defaultNext: "invalidOption",
+    });
+
+    //Choose State
+    menu.state('home.seed.select.state', {
+        run: async () => {
+            const {val } = menu;
+            
+            menu.con("Please enter State");
+           
+        },
+        next: {
+            "*\\w":"home.seed.select.lga"
+
+        },
+        defaultNext: "invalideOption",
+    });
+    //Choose State
+    menu.state('home.seed.select.lga', {
+        run: async () => {
+            const { val } = menu
+            console.log("Entered value: " + val);
+            if (val === "adamawa") {
+                menu.con("Please enter your Local Government:");
+            } else if (val === "Adamawa"){
+                menu.con("Please enter your Local Government:");
+            } else if (val === "Lagos"){
+                menu.con("Please enter your Local Government:");
+            } else if (val === "lagos"){
+                menu.con("Please enter your Local Government:");
+            }
+            else {
+                menu.end(`Our service haven't reach your area yet.
+                \nPlease call +2347033009900 to order`)
+            }                       
+        },
+        next: {
+            "*\\d":"home.faro.pay"
+        },
+        defaultNext: "invalideOption",
     });
 
     //Faro Pay
@@ -89,7 +131,7 @@ module.exports = menu => {
         run: async () => {
             const input = await Products.find({category: "Seed"});
             let seed =[];
-            for(let i=0; i< input.length; i++){
+            for(let i=0; i < input.length; i++){
                 seed.push(input[i]["title"]);
             }
             const {
