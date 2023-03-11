@@ -1,7 +1,7 @@
 const Products = require ('../../models/productModel');
 const { v4: uuidv4 } = require('uuid');
 const transaction = require('../../models/transaction');
-const client = require("twilio")(process.env.accountSid, process.env.authToken);
+//const client = require("twilio")(process.env.accountSid, process.env.authToken);
 let sessions = {};
 module.exports = menu => {
     menu.state("home.seed", {
