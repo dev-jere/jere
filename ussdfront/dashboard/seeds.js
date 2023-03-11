@@ -174,9 +174,9 @@ module.exports = menu => {
                     transactionId, phone, amount, state, lga
                 })
                 await invoice.save();
-                client.messages
+                /* client.messages
                 .create({body: `Your order ${transactionId} is ready for pick-up`, from: "+15673390650", to: phoneNumber})
-                .then(message => console.log(message.status));
+                .then(message => console.log(message.status)); */
                 menu.end(`Order completed`+
             `\n Ref: ${transactionId}`+
             `\n Pickup location to be shared via sms`);
