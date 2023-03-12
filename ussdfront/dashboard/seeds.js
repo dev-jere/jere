@@ -33,8 +33,7 @@ module.exports = menu => {
             }
             const {
                 val
-            } = menu;
-            const roundup = JSON.parse(val);         
+            } = menu;    
                 menu.con(`How many ${seed[0]} do you want?`);
            
         },
@@ -160,7 +159,7 @@ module.exports = menu => {
 
     //Payment
     menu.state('home.seed.pay',{
-        run :async()=> {
+        run: async () => {
             const { val, args:{phoneNumber} } = menu
             const transactionId = uuidv4();
             const qty = sessions.qty
@@ -168,10 +167,10 @@ module.exports = menu => {
             const phone = phoneNumber;
             const lga = sessions.lga;
             const state = sessions.state;
-            
+            //Create and save transaction to database
             try {
                 const invoice = new transaction({
-                    transactionId, phone, amount, state, lga
+                    transactionId, phone, amount, state, lga, userId
                 })
                 await invoice.save();
                 client.messages
