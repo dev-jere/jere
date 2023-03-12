@@ -8,6 +8,14 @@ const Farmer = new mongoose.Schema({
         required: true,
         type: String
     },
+    state: {
+        required: false,
+        type: String
+    },
+    lga: {
+        required: false,
+        type: String
+    },
     phone: {
         required: true,
         type: Number
@@ -15,7 +23,7 @@ const Farmer = new mongoose.Schema({
     pin: {
         type: Number,
         required: false,
-        default: 0000
+        default: '0000'
     }
 });
 

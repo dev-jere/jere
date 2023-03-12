@@ -32,7 +32,12 @@ const Product = new mongoose.Schema({
     date_added: {
         type: Date,
         default: Date.now
-    }
-})
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+});
 
 module.exports = mongoose.model("Product", Product);

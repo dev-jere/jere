@@ -1,12 +1,12 @@
 const { default: mongoose } = require('mongoose');
-const { DATABASE_URL } = process.env;
+const { DATABASE_LIVE } = process.env;
 
 
 exports.connect = () => {
-    mongoose
-    .connect(DATABASE_URL, {
+    mongoose.set('strictQuery', false)
+    .connect(DATABASE_LIVE, {
         useNewUrlParser: true,
-    })
+    })    
     .then(()=> {
         console.log('Database Connection Successful');
     })

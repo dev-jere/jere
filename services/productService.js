@@ -1,11 +1,12 @@
 /**
  * This is the product service
  */
+const auth = require('../middleware/auth')
 const Product = require('../models/productModel'); //Farmer model
 
 
 //Register a new Farmer for USSD Access
-exports.createProduct = [async (req, res)=> {
+exports.createProduct = [auth, async (req, res)=> {
     try {
         const { title, description, quantity, category, barcode, price, supplier_price } = req.body;
         const product = await Product.findOne({barcode: barcode}); //Checking database if user already exists
@@ -38,7 +39,7 @@ exports.getProduct = [ async (req, res) => {
         if (!product) {
             res.json('Incorrect Barcode or Product Doesnt Exist in Databae');
         } else {
-            res.status(200).json({'product': product});
+            res.status(200).json({product});
         }
     } catch (err) {
         console.log(err);
@@ -48,9 +49,17 @@ exports.getProduct = [ async (req, res) => {
 exports.getAllProducts = [ async (req, res) => {
     try {
         const products = await Product.find({});
-        res.status(200).json({'products':products});
+        res.status(200).json({products});
     } catch (err) {
         res.status(400).send('Service error, please try again is 15...');
     }
 }]
 
+exports.getSeeds = [async (req, res) => {
+    try {
+        const products = await Product.find({category: "Seed"});
+        res.status(200).json({'products':products});
+    } catch (err) {
+        res.status(400).send('Service error, please try again is 15...');
+    }
+}]

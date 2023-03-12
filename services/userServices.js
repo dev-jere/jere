@@ -8,7 +8,7 @@ const User = require('../models/userModel'); //Farmer model
 
 
 //Register a new Farmer for USSD Access
-exports.createUser = [async (req, res)=> {
+exports.createUser = [async (req, res, next)=> {
     try {
         const { first_name, last_name, email, password, role } = req.body;
 
@@ -34,7 +34,7 @@ exports.createUser = [async (req, res)=> {
         //Create token
         const token = jwt.sign({
             user_id: newUser._id
-        }, process.env.TOKEN_KEY, {
+        }, process.env.TOKEN, {
             expiresIn: "5h",
         });
         //Save token
@@ -51,18 +51,38 @@ exports.createUser = [async (req, res)=> {
 
 }
 }]
-
-exports.login = [async (req, res) => {
-    const { email, password } = req.body;
-}]
-
-exports.getUser = [async (req, res) => {
+exports.allUser =[async (req, res)=> {
     try {
-        const {email} = req.body;
-        const user = await User.findOne({email: email});
-        res.status(200).send(user);
+        const users = await User.find({});
+        res.status(200).send(users);
     } catch (err) {
-        res.status(500).send('Service not available at the moment, please try again in 15mins...');
+        console.log(err);
+    }
+}]
+exports.login = [async (req, res) => {
+    try {
+        const {email, password} = req.body;
+
+        if(!(email && password)) {
+            res.status(400).send("All input is required");
+        }
+
+        const user = await User.findOne({email});
+
+        if (user && (await bcrypt.compare(password, user.password))) {
+            const token = jwt.sign(
+                {user_id: user._id, email},
+                process.env.TOKEN,
+                {
+                    expiresIn: "2h",
+                }
+            );
+            user.token = token;
+            res.status(200).json({user, token});
+        }
+        res.status(400).send("Invalid Credentials");
+    } catch(err) {
+        console.log(err);
     }
 }]
 
