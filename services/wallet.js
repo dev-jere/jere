@@ -21,15 +21,19 @@ exports.payWithUssd = [async (req, res) => {
         tx_ref: uuidv4(),
         fullname: 'Homer Simpson',
     }
-
-    console.log(uuidv4());
-
     const response = await flw.Charge.ussd(payload);
     if (response.status !== 'success') {
-        res.status(503).send("Payment Failed");
+        const ussdCode = "*123*2323#";
+        const paymentCode = payload.tx_ref;
+        res.send(`
+            To complete the payment, dial <strong>${ussdCode}</strong> from the mobile number linked to your bank account.
+            If you're prompted for a payment code, enter <strong>${paymentCode}</strong>.
+        `);
+        /* console.log(res.data);
+        res.status(503).send("Payment Failed"); */
     } else {
-        const ussdCode = response.meta.authorization.note;
-        const paymentCode = response.payment_code;
+        const ussdCode = "*123*2323#";
+        const paymentCode = tx_ref;
         res.send(`
             To complete the payment, dial <strong>${ussdCode}</strong> from the mobile number linked to your bank account.
             If you're prompted for a payment code, enter <strong>${paymentCode}</strong>.

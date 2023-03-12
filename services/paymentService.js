@@ -1,4 +1,4 @@
-//const https = require('https');
+const transaction = require("../models/transaction");
 const axios = require("axios")
 const { v4: uuidv4 } = require('uuid');
 //Paystack Integration
@@ -45,3 +45,21 @@ const verify = async (reference) => {
     }
 }
 
+exports.transactions = [ async(req, res) => {
+    const response = await transaction.find({});
+    if (response) {
+        res.status(200).json(response);
+    } else {
+        res.status(500).send("Infomation not available at the momement");
+    }    
+
+}]
+
+exports.transaction = [ async (req, res) => {
+    const response = await transaction.findOne({transactionId: req.body.transactionId});
+    if (response) {
+        res.status(200).json(response);
+    } else {
+        res.status(500).json("Request failed");
+    }
+}]
