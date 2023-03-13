@@ -51,14 +51,19 @@ exports.createUser = [async (req, res, next)=> {
 
 }
 }]
-exports.allUser =[async (req, res)=> {
-    try {
-        const users = await User.find({});
+
+// Get User
+exports.User =[async (req, res)=> {
+    
+    const users = await User.findOne({email: req.body.email});
+    if (users) {
         res.status(200).send(users);
-    } catch (err) {
-        console.log(err);
+    } else {
+        res.status(500).json("Failed, try another time");
     }
 }]
+
+
 exports.login = [async (req, res) => {
     try {
         const {email, password} = req.body;

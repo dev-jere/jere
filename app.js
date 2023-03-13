@@ -7,7 +7,7 @@ Welcome to the main entry into Nakore USSD Business Logic
 require('dotenv').config(); //Environment Varialble Management 
 require('./config/db').connect(); //Database Connection
 const express = require('express'); //Express Server
-const cors = require('cors');
+//const cors = require('cors');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const app = express();
@@ -22,7 +22,7 @@ const payment = require('./controllers/paymentController');
 
 app.use(helmet());
 app.use(helmet.xssFilter());
-app.use(cors());
+//app.use(cors());
 app.use(bodyParser.json({ type: 'application/*+json' }))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
