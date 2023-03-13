@@ -145,9 +145,8 @@ module.exports = menu => {
                 sessions["amount"] = JSON.parse(total);
                 menu.con(`Total: ${qty} x 3200 = 
                 N${total}. Proceed to payment?`+
-                `\n1. Cash`+
-                `\n2. Wallet`+
-                `\n3. Airtime`);
+                `\n1. Cash`
+                );
         },
         next: {
             "1": "home.seed.pay",
