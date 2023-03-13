@@ -170,7 +170,7 @@ module.exports = menu => {
             //Create and save transaction to database
             try {
                 const invoice = new transaction({
-                    transactionId, phone, amount, state, lga, userId
+                    transactionId, phone, amount, state, lga
                 })
                 await invoice.save();
                 client.messages
