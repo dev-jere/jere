@@ -1,6 +1,7 @@
 const Products = require ('../../models/productModel');
 const transaction = require('../../models/transaction');
 const client = require("twilio")(process.env.accountSid, process.env.authToken);
+
 let sessions = {};
 
 function refCode(length, chars) {
@@ -32,16 +33,15 @@ module.exports = menu => {
     //Select Faro
     menu.state('home.seed.faro', {
         run: async () => {
+            const{val} = menu;   
+            sessions["product"] = val;
+            sessions["Desc"] = JSON.stringify(seed[0]);
             const input = await Products.find({category: "Seed"});
             let seed =[];
             for(let i=0; i< input.length; i++){
                seed.push(input[i]["title"]);
-            }
-            const {
-                val
-            } = menu;    
-                menu.con(`How many ${seed[0]} do you want?`);
-           
+            }           
+            menu.con(`How many ${seed[0]} do you want?`);
         },
         next: {
             "*\\d":"home.seed.select.state",
@@ -55,15 +55,13 @@ module.exports = menu => {
         run: async () => {
             const input = await Products.find({category: "Seed"});
             let seed =[];
-            for(let i=0; i< input.length; i++){
+            for (let i=0; i< input.length; i++) {
                 seed.push(input[i]["title"]);
             }
-            const {
-                val
-            } = menu;
-            const roundup = JSON.parse(val);         
-                menu.con(`How many ${seed[1]} do you want?`);
-           
+            const { val } = menu;
+            sessions["product"] = val
+            sessions["Desc"] = JSON.stringify(seed[1]);
+            menu.con(`How many ${seed[1]} do you want?`);
         },
         next: {
             "*\\w":"home.seed.select.state",
@@ -74,17 +72,15 @@ module.exports = menu => {
     //Select Seed Oba
     menu.state('home.seed.oba', {
         run: async () => {
+            const { val } = menu;
+            sessions["product"] = val;
+            sessions["Desc"] = JSON.stringify(seed[2]);
             const input = await Products.find({category: "Seed"});
             let seed =[];
             for(let i=0; i< input.length; i++){
                 seed.push(input[i]["title"]);
             }
-            const {
-                val
-            } = menu;
-            sessions["item"] = seed;
             menu.con(`How many ${seed[2]} do you want?`);
-           
         },
         next: {
             "*\\w":"home.seed.select.state",
@@ -98,8 +94,7 @@ module.exports = menu => {
             const {val } = menu;
             sessions["qty"] = val;
             
-            menu.con("Please enter State");
-           
+            menu.con("Please enter State");           
         },
         next: {
             "*\\w":"home.seed.select.lga"
@@ -111,6 +106,7 @@ module.exports = menu => {
     menu.state('home.seed.select.lga', {
         run: async () => {
             const { val } = menu
+            
             sessions["state"] = val
             console.log("Entered value: " + val);
             if (val === "adamawa") {
@@ -135,24 +131,37 @@ module.exports = menu => {
 
     menu.state('home.seed.select.lga.summary', {
         run: async () => {
-            
+            const { val, args: { phoneNumber }} = menu;
             const qty = sessions.qty
-            const input = await Products.find({category: "Seed"});
-            let seed =[];
-            for(let i=0; i < input.length; i++){
-                seed.push(input[i]["title"]);
-            }
-            const {
-                val,
-                args: { phoneNumber }
-            } = menu;
-            sessions["lga"]= val;                
-                const total = qty * 3200
-                sessions["amount"] = JSON.parse(total);
-                menu.con(`Total: ${qty} x 3200 = 
+            const desc = sessions.Desc
+            const selectedProduct = sessions.product;
+            if (selectedProduct === "0") {
+                const total = qty * 1200;
+                menu.con(`Summary: `+
+                `\n${desc} x N1,200.00/kg = 
                 N${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
+            } else if ( selectedProduct === "1") {
+                const total = qty * 3700;
+                menu.con(`Summary: `+
+                `\n${desc} x N3,700.00/kg = 
+                N${total}. Proceed to payment?`+
+                `\n1. Cash`
+                );
+            } else if ( selectedProduct === "2") {
+                const total = qty * 2000;
+                menu.con(`Summary: `+
+                `\n${desc} x N2,000.00/kg = 
+                N${total}. Proceed to payment?`+
+                `\n1. Cash`
+                );
+            }
+
+            sessions["lga"]= val;                
+            const total = qty * 3200
+            sessions["amount"] = JSON.parse(total);
+           
         },
         next: {
             "1": "home.seed.pay",
@@ -191,87 +200,6 @@ module.exports = menu => {
             
         }
     })
-
-    //Faro Pay
-    menu.state('home.faro.pay', {
-        run: async () => {
-            const input = await Products.find({category: "Seed"});
-            let seed =[];
-            for(let i=0; i < input.length; i++){
-                seed.push(input[i]["title"]);
-            }
-            const {
-                val,
-                args: { phoneNumber }
-            } = menu;
-                qty = JSON.parse(val)
-                const total = qty * 3200
-                menu.con(`Total: ${qty} x 3200 = 
-                N${total}. Proceed to payment?`+
-                `\n1. Cash`+
-                `\n2. Wallet`+
-                `\n3. Airtime`);
-    
-        },
-        next: {
-            "2":"home.chemical.pay"
-        },
-        defaultNext: "invalidOption",
-    });
-
-    //Hybrid Pay
-    menu.state('home.hybrid.pay', {
-        run: async () => {
-            const input = await Products.find({category: "Seed"});
-            let seed =[];
-            for(let i=0; i< input.length; i++){
-                seed.push(input[i]["title"]);
-            }
-            const {
-                val,
-                args: { phoneNumber }
-            } = menu;
-                qty = JSON.parse(val)
-                const total = qty * 3200
-                menu.con(`Total: ${qty} x 3200 = 
-                N${total}. Proceed to payment?`+
-                `\n1. Cash`+
-                `\n2. Wallet`+
-                `\n3. Airtime`);
-    
-        },
-        next: {
-            "2":"home.chemical.pay"
-        },
-        defaultNext: "invalidOption",
-    });
-
-    //Oba Pay
-    menu.state('home.oba.pay', {
-        run: async () => {
-            const input = await Products.find({category: "Seed"});
-            let seed =[];
-            for(let i=0; i< input.length; i++){
-                seed.push(input[i]["title"]);
-            }
-            const {
-                val,
-                args: { phoneNumber }
-            } = menu;
-                qty = JSON.parse(val)
-                const total = qty * 3200
-                menu.con(`Total: ${qty} x 3200 = 
-                N${total}. Proceed to payment?`+
-                `\n1. Cash`+
-                `\n2. Wallet`+
-                `\n3. Airtime`);
-    
-        },
-        next: {
-            "2":"home.chemical.pay"
-        },
-        defaultNext: "invalidOption",
-    });
     
     menu.state('invalidOption', {
         run: () => {

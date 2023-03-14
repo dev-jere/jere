@@ -1,6 +1,13 @@
 const { round } = require('lodash');
 const Products = require ('../../models/productModel');
-const sessions = {};
+
+let sessions = {};
+
+function refCode(length, chars) {
+    let result = '';
+    for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
 module.exports = menu => {
     //Nakore Chemical Listing Menu
     menu.state("home.chemical", {
