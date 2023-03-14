@@ -4,8 +4,8 @@ const client = require("twilio")(process.env.accountSid, process.env.authToken);
 let sessions = {};
 
 function refCode(length, chars) {
-    var result = '';
-    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    let result = '';
+    for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
 }
 
@@ -166,7 +166,7 @@ module.exports = menu => {
     menu.state('home.seed.pay',{
         run: async () => {
             const { val, args:{phoneNumber} } = menu
-            const transactionId = refCode();
+            const transactionId = refCode(5, '1234NAKORE');
             const qty = sessions.qty
             const amount = qty * 3200;
             const phone = phoneNumber;
