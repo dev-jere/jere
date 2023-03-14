@@ -35,12 +35,14 @@ module.exports = menu => {
         run: async () => {
             const{val} = menu;   
             sessions["product"] = val;
-            sessions["Desc"] = JSON.stringify(seed[0]);
-            const input = await Products.find({category: "Seed"});
             let seed =[];
+            
+            const input = await Products.find({category: "Seed"});
+            
             for(let i=0; i< input.length; i++){
                seed.push(input[i]["title"]);
-            }           
+            } 
+            sessions["Desc"] = seed[0].toString();          
             menu.con(`How many ${seed[0]} do you want?`);
         },
         next: {
@@ -53,14 +55,15 @@ module.exports = menu => {
     //Select Seed Co Maize Hybrid
     menu.state('home.seed.hybrid', {
         run: async () => {
+            const { val } = menu;
             const input = await Products.find({category: "Seed"});
             let seed =[];
             for (let i=0; i< input.length; i++) {
                 seed.push(input[i]["title"]);
             }
-            const { val } = menu;
+            
             sessions["product"] = val
-            sessions["Desc"] = JSON.stringify(seed[1]);
+            sessions["Desc"] = seed[1].toString();
             menu.con(`How many ${seed[1]} do you want?`);
         },
         next: {
@@ -73,13 +76,15 @@ module.exports = menu => {
     menu.state('home.seed.oba', {
         run: async () => {
             const { val } = menu;
-            sessions["product"] = val;
-            sessions["Desc"] = JSON.stringify(seed[2]);
+            let seed =[];            
+            sessions["product"] = val;            
             const input = await Products.find({category: "Seed"});
-            let seed =[];
+            
+            
             for(let i=0; i< input.length; i++){
                 seed.push(input[i]["title"]);
             }
+            sessions["Desc"] = seed[2].toString();
             menu.con(`How many ${seed[2]} do you want?`);
         },
         next: {
@@ -132,27 +137,27 @@ module.exports = menu => {
     menu.state('home.seed.select.lga.summary', {
         run: async () => {
             const { val, args: { phoneNumber }} = menu;
-            const qty = sessions.qty
-            const desc = sessions.Desc
+            const qty = sessions.qty;
+            const desc = sessions.Desc;
             const selectedProduct = sessions.product;
             if (selectedProduct === "0") {
                 const total = qty * 1200;
                 menu.con(`Summary: `+
-                `\n${desc} x N1,200.00/kg = 
+                `\n${qty} `+`${desc} x N1,200.00/kg = 
                 N${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
             } else if ( selectedProduct === "1") {
                 const total = qty * 3700;
                 menu.con(`Summary: `+
-                `\n${desc} x N3,700.00/kg = 
+                `\n${qty} `+`${desc} x N3,700.00/kg = 
                 N${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
             } else if ( selectedProduct === "2") {
                 const total = qty * 2000;
                 menu.con(`Summary: `+
-                `\n${desc} x N2,000.00/kg = 
+                `\n${qty} `+`${desc} x N2,000.00/kg = 
                 N${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
@@ -175,7 +180,7 @@ module.exports = menu => {
     menu.state('home.seed.pay',{
         run: async () => {
             const { val, args:{phoneNumber} } = menu
-            const transactionId = refCode(5, '1234NAKORE');
+            const transactionId = refCode(4, '01345678');
             const qty = sessions.qty
             const amount = qty * 3200;
             const phone = phoneNumber;
@@ -187,9 +192,9 @@ module.exports = menu => {
                     transactionId, phone, amount, state, lga
                 })
                 await invoice.save();
-                client.messages
+                /* client.messages
                 .create({body: `Your order ${transactionId} is ready for pick-up`, from: "+15673390650", to: phoneNumber})
-                .then(message => console.log(message.status));
+                .then(message => console.log(message.status)); */
                 menu.end(`Order completed`+
             `\n Ref: ${transactionId}`+
             `\n Pickup location to be shared via sms`);
