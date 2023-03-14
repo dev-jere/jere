@@ -1,8 +1,14 @@
 const Products = require ('../../models/productModel');
-const { v4: uuidv4 } = require('uuid');
 const transaction = require('../../models/transaction');
 const client = require("twilio")(process.env.accountSid, process.env.authToken);
 let sessions = {};
+
+function refCode(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
+
 module.exports = menu => {
     menu.state("home.seed", {
         run: async () => {
@@ -160,7 +166,7 @@ module.exports = menu => {
     menu.state('home.seed.pay',{
         run: async () => {
             const { val, args:{phoneNumber} } = menu
-            const transactionId = uuidv4();
+            const transactionId = refCode();
             const qty = sessions.qty
             const amount = qty * 3200;
             const phone = phoneNumber;

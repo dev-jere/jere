@@ -7,3 +7,12 @@ const client = require("twilio")(accountSid, authToken);
 client.messages
   .create({ body: "Hello from Nakore", from: "+15673390650", to: "+233554356646" })
   .then(message => console.log(message.sid));
+
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
+var rString = randomString(6, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+console.log(rString);
