@@ -26,14 +26,13 @@ exports.payWithUssd = [async (req, res) => {
         const ussdCode = "*123*2323#";
         const paymentCode = payload.tx_ref;
         res.send(`
-            To complete the payment, dial <strong>${ussdCode}</strong> from the mobile number linked to your bank account.
-            If you're prompted for a payment code, enter <strong>${paymentCode}</strong>.
+           Error
         `);
         /* console.log(res.data);
         res.status(503).send("Payment Failed"); */
     } else {
         const ussdCode = "*123*2323#";
-        const paymentCode = tx_ref;
+        const paymentCode = payload.tx_ref;
         res.send(`
             To complete the payment, dial <strong>${ussdCode}</strong> from the mobile number linked to your bank account.
             If you're prompted for a payment code, enter <strong>${paymentCode}</strong>.
