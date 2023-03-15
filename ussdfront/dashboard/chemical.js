@@ -13,12 +13,11 @@ module.exports = menu => {
     menu.state("home.chemical", {
         run: async () => {
             const {val, args: { phoneNumber }} = menu;
-            const input = await Products.find({category: "Herbicide"});
+            const chemical = await Products.find({category: "Herbicide"});
             let herbicide =[];
             
-            for(let i=0; i< input.length; i++){
-                herbicide.push(`\n`+(i+1).toString()+`. ` +input[i]["title"]);
-                
+            for(let i=0; i< chemical.length; i++){
+                herbicide.push(`\n`+(i+1).toString()+`. ` +chemical[i]["title"]);                
             }
             menu.con(`Chemicals available:`+
                 `${herbicide}`
@@ -35,16 +34,18 @@ module.exports = menu => {
     //Roundup Herbicide Selection
     menu.state('home.chemical.roundup', {
         run: async () => {
-            const input = await Products.find({category: "Herbicide"});
-            let herbicide =[];
-            for(let i=0; i< input.length; i++){
+            const { val } = menu;
+            sessions["product"] = val;
+            const chemical = await Products.find({category: "Herbicide"});
+            let herbicide = "";
+            for(let i=0; i< chemical.length; i++){
                 herbicide.push(input[i]["title"]);
             }
-            const {
-                val
-            } = menu;
+            
             const roundup = JSON.parse(val);         
-                menu.con(`How many ${herbicide[0]} do you want?`);
+            menu.con(`Fertilizers available:`+
+            `${seeds}`
+            );
            
         },
         next: {
@@ -55,14 +56,13 @@ module.exports = menu => {
     //Roundup Atrazine Selection
     menu.state('home.chemical.atrazine', {
         run: async () => {
+            const { val } = menu;
+            sessions["product"] = val;
             const input = await Products.find({category: "Herbicide"});
             let herbicide =[];
             for(let i=0; i< input.length; i++){
                 herbicide.push(input[i]["title"]);
-            }
-            const {
-                val
-            } = menu;
+            }            
             sessions["atrazine"] = val;     
                 menu.con(`How many ${herbicide[1]}`);
         },

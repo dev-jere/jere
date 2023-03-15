@@ -18,7 +18,7 @@ module.exports = menu => {
             for(let i=0; i< input.length; i++){
                 seeds += (`\n`+[i.toString()]+" : "+ input[i]["title"]); 
             }
-            menu.con(`Fertilizers available:`+
+            menu.con(`Seedlings available:`+
                 `${seeds}`
             );
             },
