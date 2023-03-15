@@ -32,7 +32,7 @@ app.use('/api', farmerRoute);
 app.use('/api', ussdMenu);
 app.use('/api', productRoute);
 app.use('/api', userRoute);
-app.use('/api', payment);
+//app.use('/api', payment);
 
 
 
