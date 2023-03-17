@@ -57,7 +57,7 @@ exports.User =[async (req, res)=> {
     
     const users = await User.findOne({email: req.body.email});
     if (users) {
-        res.status(200).send(users);
+        res.status(200).send({"users":users});
     } else {
         res.status(500).json("Failed, try another time");
     }
