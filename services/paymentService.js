@@ -93,3 +93,7 @@ exports.agentConfirmCashPayment = [ async (req, res) => {
         res.status(501).send("failed");
     }
 }]
+
+exports.addAgent = [ async (req, res) => {
+    
+}]
