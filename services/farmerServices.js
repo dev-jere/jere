@@ -2,7 +2,13 @@
  * This is the farmer service
  */
 const Farmer = require('../models/farmerModel'); //Farmer model
+const Order = require('../models/transaction')
 
+function refCode(length, chars) {
+    let result = '';
+    for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
 
 //Register a new Farmer for USSD Access
 exports.createFarmer = [async (req, res)=> {
@@ -35,4 +41,29 @@ exports.getFarmers = [ async (req, res) => {
     } catch (err) {
         console.log(err);
     }    
+}]
+
+exports.createOrder = [ async (req, res) => {
+    try {
+        const { product, phone, state, lga, qty, amount, id } = req.body;
+        const order = await Order.findOne({transactionId: id});
+        if (order) {
+            res.status(200).send("Order completed")
+        } else {
+            const newOrder = new Order({
+                transactionId: refCode(4, "123456"),
+                product,
+                qty,
+                state,
+                amount,
+                lga,
+                phone
+            })
+            await newOrder.save()
+            res.status(201).send("Order Successful");
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
 }]

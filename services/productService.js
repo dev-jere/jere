@@ -6,7 +6,7 @@ const Product = require('../models/productModel'); //Farmer model
 
 
 //Register a new Farmer for USSD Access
-exports.createProduct = [auth, async (req, res)=> {
+exports.createProduct = [async (req, res)=> {
     try {
         const { title, description, quantity, category, barcode, price, supplier_price } = req.body;
         const product = await Product.findOne({barcode: barcode}); //Checking database if user already exists

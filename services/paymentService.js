@@ -1,6 +1,7 @@
 const transaction = require("../models/transaction");
 const axios = require("axios")
 const { v4: uuidv4 } = require('uuid');
+const { response } = require("express");
 //Paystack Integration
 
 exports.paystackBank = [ async(req, res) => {
@@ -78,5 +79,17 @@ exports.transaction = [ async (req, res) => {
         res.status(200).json(response);
     } else {
         res.status(500).json("Request failed");
+    }
+}]
+
+
+exports.agentConfirmCashPayment = [ async (req, res) => {
+    const response =await transaction.updateOne({transactionId: req.body.id}, {$set:{paymentStatus: req.body.status}})
+    console.log(response);
+    if(response) {
+        res.status(200).json("Transaction Complete");
+
+    } else {
+        res.status(501).send("failed");
     }
 }]

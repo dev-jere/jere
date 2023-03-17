@@ -12,4 +12,5 @@ const paystack = require('../services/paymentService');
 router.get('/transactions', paystack.transactions);
 router.get('/transaction', paystack.transaction);
 router.get('/total', paystack.Total);
+router.post('/agentconfirm', paystack.agentConfirmCashPayment);
 module.exports = router;
