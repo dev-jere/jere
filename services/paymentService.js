@@ -46,9 +46,26 @@ const verify = async (reference) => {
 }
 
 exports.transactions = [ async(req, res) => {
-    const response = await transaction.find({});
+    const response = await transaction.find({}).sort({_id: -1});
     if (response) {
-        res.status(200).json(response);
+        res.status(200).json({'transactions': response});
+    } else {
+        res.status(500).send("Infomation not available at the momement");
+    }    
+
+}]
+
+exports.Total = [ async(req, res) => {
+    const response = await transaction.aggregate([
+        {
+            $match: {currency: "NGN"}
+        },
+        {
+            $group: { _id: "$transactionId", totalTranaction: {$sum: "$amount"}}
+        }
+    ]);
+    if (response) {
+        res.status(200).json({'total': response});
     } else {
         res.status(500).send("Infomation not available at the momement");
     }    

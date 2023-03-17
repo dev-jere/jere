@@ -10,10 +10,6 @@ const transactionSchema = new mongoose.Schema({
             type: String,
             trim: true,
         },
-        name: {
-            type: String,
-            trim: true,
-        },
         state: {
             required: true,
             type: String,
@@ -29,6 +25,10 @@ const transactionSchema = new mongoose.Schema({
             trim: true,
         },
         phone: {
+            type: String,
+            required: true,
+        },
+        product: {
             type: String,
             required: true,
         },

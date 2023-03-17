@@ -137,11 +137,13 @@ module.exports = menu => {
     menu.state('home.seed.select.lga.summary', {
         run: async () => {
             const { val, args: { phoneNumber }} = menu;
+            sessions["lga"] = val;
             const qty = sessions.qty;
             const desc = sessions.Desc;
             const selectedProduct = sessions.product;
             if (selectedProduct === "0") {
-                const total = qty * 1200;
+                const total= qty * 1200;
+                sessions["total"] = total;
                 menu.con(`Summary: `+
                 `\n${qty} `+`${desc} x N1,200.00/kg = 
                 N${total}. Proceed to payment?`+
@@ -149,6 +151,7 @@ module.exports = menu => {
                 );
             } else if ( selectedProduct === "1") {
                 const total = qty * 3700;
+                sessions["total"] = total;
                 menu.con(`Summary: `+
                 `\n${qty} `+`${desc} x N3,700.00/kg = 
                 N${total}. Proceed to payment?`+
@@ -156,16 +159,13 @@ module.exports = menu => {
                 );
             } else if ( selectedProduct === "2") {
                 const total = qty * 2000;
+                sessions["total"] = total;
                 menu.con(`Summary: `+
                 `\n${qty} `+`${desc} x N2,000.00/kg = 
                 N${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
             }
-
-            sessions["lga"]= val;                
-            const total = qty * 3200
-            sessions["amount"] = JSON.parse(total);
            
         },
         next: {
@@ -179,9 +179,14 @@ module.exports = menu => {
     //Payment
     menu.state('home.seed.pay',{
         run: async () => {
+
+            console.log(sessions.total);
+            console.log(sessions.lga)
+
             const { val, args:{phoneNumber} } = menu
             const transactionId = refCode(4, '01345678');
-            const qty = sessions.qty
+            const qty = sessions.qty;
+            const product = sessions.Desc;
             const amount = qty * 3200;
             const phone = phoneNumber;
             const lga = sessions.lga;
@@ -189,7 +194,7 @@ module.exports = menu => {
             //Create and save transaction to database
             try {
                 const invoice = new transaction({
-                    transactionId, phone, amount, state, lga
+                    transactionId, phone, product, amount, state, lga
                 })
                 await invoice.save();
                 /* client.messages
