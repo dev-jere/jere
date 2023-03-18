@@ -84,19 +84,3 @@ exports.transaction = [ async (req, res) => {
         res.status(500).json("Request failed");
     }
 }]
-
-
-exports.agentConfirmCashPayment = [ async (req, res) => {
-    const response =await transaction.updateOne({transactionId: req.body.id}, {$set:{paymentStatus: req.body.status}})
-    console.log(response);
-    if(response) {
-        res.status(200).json("Transaction Complete");
-
-    } else {
-        res.status(501).send("failed");
-    }
-}]
-
-exports.addAgent = [ async (req, res) => {
-
-}]
