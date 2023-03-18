@@ -59,17 +59,20 @@ exports.transactions = [ async(req, res) => {
 exports.Total = [ async(req, res) => {
     const response = await transaction.aggregate([
         {
-            $match: {currency: "NGN"}
-        },
-        {
-            $group: { _id: "$transactionId", totalTranaction: {$sum: "$amount"}}
-        }
-    ]);
-    if (response) {
-        res.status(200).json({'total': response});
-    } else {
-        res.status(500).send("Infomation not available at the momement");
-    }    
+            $setWindowFields: {
+               partitionBy: "$currency",
+               sortBy: { createdAt: 1 },
+               output: {
+                  sumQuantityForState: {
+                     $sum: "$amount"                    
+                  }
+               }
+            }
+         }
+    ], function(err, result){
+        console.log(result);
+        console.log(response);
+    })
 
 }]
 
@@ -95,5 +98,5 @@ exports.agentConfirmCashPayment = [ async (req, res) => {
 }]
 
 exports.addAgent = [ async (req, res) => {
-    
+
 }]
