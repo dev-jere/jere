@@ -20,8 +20,30 @@ menu.startState({
         
     },
     next: {
-        "1":"Find Transaction",
+        "1":"Find",
+        "2":"Change Pin"
+    },
+    defaultNext: "invalidOption",
+
+
+})
+
+menu.state("find", {
+    run: async () => {
+        const { val } =menu;
+        menu.con(`Provide Ref Code: `)
+
+    },
+    next: {
+        "*\\d":"Find",
         "2":"Change Pin"
     },
     defaultNext: "invalidOption",
 })
+
+menu.state('invalidOption', {
+    run: () => {
+        menu.end(`Invalid option`);
+    },
+});
+return menu;
