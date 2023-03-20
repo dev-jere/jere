@@ -84,8 +84,10 @@ exports.login = [async (req, res) => {
             );
             user.token = token;
             res.status(200).json({user, token});
+        } else {
+            res.status(400).send("Invalid Credentials");
         }
-        res.status(400).send("Invalid Credentials");
+        
     } catch(err) {
         console.log(err);
     }
