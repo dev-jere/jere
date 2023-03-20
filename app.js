@@ -19,6 +19,7 @@ const ussdMenu = require('./controllers/ussdController');
 const productRoute = require('./controllers/productController');
 const userRoute = require('./controllers/userController');
 const payment = require('./controllers/paymentController');
+const agent = require('./controllers/agentController');
 
 app.use(helmet());
 app.use(helmet.xssFilter());
@@ -33,6 +34,7 @@ app.use('/api', ussdMenu);
 app.use('/api', productRoute);
 app.use('/api', userRoute);
 app.use('/api', payment);
+app.use('/api', agent);
 
 
 

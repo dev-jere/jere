@@ -71,8 +71,9 @@ exports.Total = [ async(req, res) => {
          }
     ], function(err, result){
         console.log(result);
-        console.log(response);
+        
     })
+    res.status(200).json({"total": response});
 
 }]
 
@@ -84,3 +85,10 @@ exports.transaction = [ async (req, res) => {
         res.status(500).json("Request failed");
     }
 }]
+
+/* exports.createTransaction = [ async (req, res) => {
+    const {id, product, total, state, lga, phone} = req.body;
+    const order = new transaction.create({
+
+    })
+}] */

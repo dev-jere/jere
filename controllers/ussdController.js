@@ -1,14 +1,11 @@
 const express = require ('express');
 const router = express.Router();
-const menu = require('../ussdfront/index');
+
 const ussdMenu = require('../services/ussdMenu');
+const agentMenu = require('../services/agentMenu');
 
 
-router.post('/menu', ussdMenu.Menu);
-router.post('/ussd', (req, res) => {
-    menu(req).run(req.body, ussdResult => {
-        res.send(ussdResult);
-    })
-})
+router.post('/farmer', ussdMenu.Menu);
+router.post('/agent', agentMenu.Menu);
 
 module.exports = router;
