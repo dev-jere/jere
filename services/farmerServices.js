@@ -13,23 +13,25 @@ function refCode(length, chars) {
 //Register a new Farmer for USSD Access
 exports.createFarmer = [async (req, res)=> {
     try {
-        const { first_name, last_name, phone } = req.body;
+        const { first_name, last_name, region, district, phone, pin } = req.body;
         const farmer = await Farmer.findOne({phone: phone}); //Checking database if user already exists
 
-        if (farmer) {
-            res.status(400).send('A farmer already exsist with this data...');
-
-        } else {
+        if (!farmer) {
             const newFarmer = new Farmer({
                 first_name,
                 last_name,
                 phone,
+                region,
+                district,
                 pin
             });
             await newFarmer.save();
             res.status(201).send('Farmer registered successfully.')
+        } else {
+            res.status(400).send('A farmer already exsist with this data...');
         }
     } catch (err) {
+        console.log(err);
         res.status(500).send('Service not available at the moment, please try again in 15mins...');
     }
 }]
@@ -45,7 +47,7 @@ exports.getFarmers = [ async (req, res) => {
 
 exports.createOrder = [ async (req, res) => {
     try {
-        const { product, phone, state, lga, qty, amount, id } = req.body;
+        const { product, phone, region, district, qty, amount, id } = req.body;
         const order = await Order.findOne({transactionId: id});
         if (order) {
             res.status(200).send("Order completed")
@@ -54,9 +56,9 @@ exports.createOrder = [ async (req, res) => {
                 transactionId: refCode(4, "123456"),
                 product,
                 qty,
-                state,
+                region,
                 amount,
-                lga,
+                district,
                 phone
             })
             await newOrder.save()

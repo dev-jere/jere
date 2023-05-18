@@ -4,11 +4,11 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
-const User = require('../models/userModel'); //Farmer model
+const User = require('../models/userModel'); //Admin model
 
 
-//Register a new Farmer for USSD Access
-exports.createUser = [async (req, res, next)=> {
+//Register a new Admin User
+exports.createUser = [auth, async (req, res, next)=> {
     try {
         const { first_name, last_name, email, password, role } = req.body;
 
@@ -53,11 +53,11 @@ exports.createUser = [async (req, res, next)=> {
 }]
 
 // Get User
-exports.User =[async (req, res)=> {
+exports.User =[auth, async (req, res)=> {
     
-    const users = await User.findOne({email: req.body.email});
-    if (users) {
-        res.status(200).send({"users":users});
+    const user = await User.findOne({email: req.body.email});
+    if (user) {
+        res.status(200).send({"user":user});
     } else {
         res.status(500).json("Failed, try another time");
     }

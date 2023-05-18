@@ -8,11 +8,11 @@ const Farmer = new mongoose.Schema({
         required: true,
         type: String
     },
-    state: {
+    region: {
         required: false,
         type: String
     },
-    lga: {
+    district: {
         required: false,
         type: String
     },
