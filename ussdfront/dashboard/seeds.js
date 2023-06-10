@@ -13,7 +13,7 @@ function refCode(length, chars) {
 module.exports = menu => {
     menu.state("home.seed", {
         run: async () => {
-            const input = await Products.find({category: "Seed"});            
+            const input = await Products.find({category: "Seeds"});            
             let seeds="";            
             for(let i=0; i< input.length; i++){
                 seeds += (`\n`+[i.toString()]+" : "+ input[i]["title"]); 
@@ -37,7 +37,7 @@ module.exports = menu => {
             sessions["product"] = val;
             let seed =[];
             
-            const input = await Products.find({category: "Seed"});
+            const input = await Products.find({category: "Seeds"});
             
             for(let i=0; i< input.length; i++){
                seed.push(input[i]["title"]);
@@ -56,7 +56,7 @@ module.exports = menu => {
     menu.state('home.seed.hybrid', {
         run: async () => {
             const { val } = menu;
-            const input = await Products.find({category: "Seed"});
+            const input = await Products.find({category: "Seeds"});
             let seed =[];
             for (let i=0; i< input.length; i++) {
                 seed.push(input[i]["title"]);
@@ -78,7 +78,7 @@ module.exports = menu => {
             const { val } = menu;
             let seed =[];            
             sessions["product"] = val;            
-            const input = await Products.find({category: "Seed"});
+            const input = await Products.find({category: "Seeds"});
             
             
             for(let i=0; i< input.length; i++){

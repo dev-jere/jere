@@ -1,5 +1,3 @@
-const { keys } = require("lodash");
-
 const state = [
     {
       "state": "Adamawa",
@@ -999,46 +997,14 @@ const state = [
     }
   ]
 
-  function getLga(state){
-    const result = [];
-    for (const key in state) {
-      if (state.hasOwnProperty(key)) {
-        const st = state[key].state;
-        const lgas = state[key].lgas;
-        result.push({
-          state: st,
-          lgas: lgas
-        })
-      }
-    }
-    return result;
+const myForEach = (state, cb) => {
+  for(let i = 0; i < state.length; i++) {
+    const main = state[i].state;
+    const lga= state[i].lgas;
+    cb(main, lga)
   }
-
-const good = getLga(state);
-const news = ""
-for(let a in state){
-this.news = state[a].state
-  for(let b = 0; b >= this.news.length; b++){
-    console.log(b);
-  }
-
-  
 }
-console.log(news);
 
-//console.log(good);
-
-
-const play = state.map((key, value)=> ({state: key, value: value}))
-//for(sta)
-//console.log(play)
-
-const stet = Object.keys(state).map(function(k){
-  return state[k]
-}, play)
-
-
-
-
-
-//console.log(play)
+myForEach(state, (state) => {
+  console.log(JSON.parse(state));
+})

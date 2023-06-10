@@ -79,7 +79,7 @@ exports.login = [async (req, res) => {
                 {user_id: user._id, email},
                 process.env.TOKEN,
                 {
-                    expiresIn: "2h",
+                    expiresIn: 86400,
                 }
             );
             user.token = token;

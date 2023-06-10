@@ -39,7 +39,20 @@ exports.createFarmer = [async (req, res)=> {
 exports.getFarmers = [ async (req, res) => {
     try {
         const farmers = await Farmer.find({})
-        res.status(200).json({"farmers": farmers})
+        res.status(200).json(farmers)
+    } catch (err) {
+        console.log(err);
+    }    
+}]
+
+//Get a single Farmer with ID
+
+exports.Farmer = [ async (req, res) => {
+    try {
+        const phone =  req.query.phone
+        const farmer = await Farmer.findOne({phone: phone})
+        console.log(farmer)
+        res.status(200).json(farmer)
     } catch (err) {
         console.log(err);
     }    
