@@ -20,6 +20,7 @@ const productRoute = require('./controllers/productController');
 const userRoute = require('./controllers/userController');
 const payment = require('./controllers/paymentController');
 const agent = require('./controllers/agentController');
+const monthly = require('./controllers/transactionController')
 
 app.use(helmet());
 app.use(helmet.xssFilter());
@@ -35,6 +36,7 @@ app.use('/api', productRoute);
 app.use('/api', userRoute);
 app.use('/api', payment);
 app.use('/api', agent);
+app.use('/api', monthly);
 
 
 
