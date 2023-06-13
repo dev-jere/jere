@@ -14,7 +14,7 @@ menu.startState('home', {
                 "\n3. Fertilizer"                
                 );
             } else {
-                menu.con(`Welcome to Nakore:`+
+                menu.con(`Welcome to Jere:`+
                 "\n0. Register"+
                 "\n1. Seed"+
                 "\n2. Herbicide"+
