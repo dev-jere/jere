@@ -142,27 +142,27 @@ module.exports = menu => {
             const desc = sessions.Desc;
             const selectedProduct = sessions.product;
             if (selectedProduct === "0") {
-                const total= qty * 12;
+                const total= qty * 1800;
                 sessions["total"] = total;
                 menu.con(`Summary: `+
-                `\n${qty} `+`${desc} x GHC12.00/kg = 
-                GHC${total}. Proceed to payment?`+
+                `\n${qty} `+`${desc} x N1,800.00/kg = 
+                N${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
             } else if ( selectedProduct === "1") {
-                const total = qty * 20;
+                const total = qty * 4000;
                 sessions["total"] = total;
                 menu.con(`Summary: `+
-                `\n${qty} `+`${desc} x GHC20.00/kg = 
-                GHC${total}. Proceed to payment?`+
+                `\n${qty} `+`${desc} x N4,000.00/kg = 
+                N${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
             } else if ( selectedProduct === "2") {
-                const total = qty * 18;
+                const total = qty * 2400;
                 sessions["total"] = total;
                 menu.con(`Summary: `+
-                `\n${qty} `+`${desc} x GHC18.00/kg = 
-                GHC${total}. Proceed to payment?`+
+                `\n${qty} `+`${desc} x N2,400.00/kg = 
+                N${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
             }
