@@ -99,7 +99,7 @@ module.exports = menu => {
             const {val } = menu;
             sessions["qty"] = val;
             
-            menu.con("Enter farm Region");           
+            menu.con("Enter State");           
         },
         next: {
             "*\\w":"home.seed.select.lga"
@@ -114,14 +114,14 @@ module.exports = menu => {
             
             sessions["state"] = val
             console.log("Entered value: " + val);
-            if (val === "Eastern Region") {
-                menu.con("Enter farm District:");
-            } else if (val === "eastern region"){
-                menu.con("Enter farm District:");
-            } else if (val === "Ashanti Region"){
-                menu.con("Enter farm District:");
-            } else if (val === "ashanti region"){
-                menu.con("Enter farm District:");
+            if (val === "Adamawa") {
+                menu.con("Enter LGA:");
+            } else if (val === "adamawa"){
+                menu.con("Enter LGA:");
+            } else if (val === "Lagos"){
+                menu.con("Enter LGA:");
+            } else if (val === "lagos"){
+                menu.con("Enter LGA:");
             }
             else {
                 menu.end(`Our service hasn't reached your area yet.
