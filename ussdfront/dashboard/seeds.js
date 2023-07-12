@@ -99,7 +99,7 @@ module.exports = menu => {
             const {val } = menu;
             sessions["qty"] = val;
             
-            menu.con("Enter State");           
+            menu.con("Enter Region in Ghana");           
         },
         next: {
             "*\\w":"home.seed.select.lga"
@@ -114,19 +114,7 @@ module.exports = menu => {
             
             sessions["state"] = val
             console.log("Entered value: " + val);
-            if (val === "Adamawa") {
-                menu.con("Enter LGA:");
-            } else if (val === "adamawa"){
-                menu.con("Enter LGA:");
-            } else if (val === "Lagos"){
-                menu.con("Enter LGA:");
-            } else if (val === "lagos"){
-                menu.con("Enter LGA:");
-            }
-            else {
-                menu.end(`Our service hasn't reached your area yet.
-                \nPlease call +2347033009900 to order`)
-            }                       
+            menu.con("Enter Pickup Town")                      
         },
         next: {
             "*\\w":"home.seed.select.lga.summary"
@@ -142,31 +130,38 @@ module.exports = menu => {
             const desc = sessions.Desc;
             const selectedProduct = sessions.product;
             if (selectedProduct === "0") {
-                const total= qty * 1800;
+                const total= qty * 30;
                 sessions["total"] = total;
                 menu.con(`Summary: `+
-                `\n${qty} `+`${desc} x N1,800.00/kg = 
-                N${total}. Proceed to payment?`+
+                `\n${qty} `+`${desc} x Ghc30.00/2kg = 
+                Ghc${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
             } else if ( selectedProduct === "1") {
-                const total = qty * 4000;
+                const total = qty * 200;
                 sessions["total"] = total;
                 menu.con(`Summary: `+
-                `\n${qty} `+`${desc} x N4,000.00/kg = 
-                N${total}. Proceed to payment?`+
+                `\n${qty} `+`${desc} x Ghc200.00/kg = 
+                Ghc${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
             } else if ( selectedProduct === "2") {
-                const total = qty * 2400;
+                const total = qty * 100;
                 sessions["total"] = total;
                 menu.con(`Summary: `+
-                `\n${qty} `+`${desc} x N2,400.00/kg = 
-                N${total}. Proceed to payment?`+
+                `\n${qty} `+`${desc} x Ghc100.00/kg = 
+                Ghc${total}. Proceed to payment?`+
                 `\n1. Cash`
                 );
-            }
-           
+            } else if ( selectedProduct === "3") {
+                const total = qty * 60;
+                sessions["total"] = total;
+                menu.con(`Summary: `+
+                `\n${qty} `+`${desc} x Ghc60.00/2kg = 
+                Ghc${total}. Proceed to payment?`+
+                `\n1. Cash`
+                );
+            }            
         },
         next: {
             "1": "home.seed.pay",
@@ -209,8 +204,7 @@ module.exports = menu => {
             }
             
         }
-    })
-    
+    })    
     menu.state('invalidOption', {
         run: () => {
             menu.end(`Invalid option`);
