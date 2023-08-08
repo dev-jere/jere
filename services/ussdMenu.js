@@ -22,7 +22,7 @@ menu.startState({
                 );
 
             } else {
-                menu.con(`Welcome to Nakore:`+
+                menu.con(`Welcome to Jere:`+
                 "\n0. Register"+
                 "\n1. Seeds"+
                 "\n2. Chemical"+

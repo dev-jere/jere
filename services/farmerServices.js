@@ -36,6 +36,8 @@ exports.createFarmer = [async (req, res)=> {
     }
 }]
 
+
+//Get a list of registered farmers
 exports.getFarmers = [ async (req, res) => {
     try {
         const farmers = await Farmer.find({})
@@ -45,8 +47,8 @@ exports.getFarmers = [ async (req, res) => {
     }    
 }]
 
-//Get a single Farmer with ID
 
+//Get a farmer with Phone number
 exports.Farmer = [ async (req, res) => {
     try {
         const phone =  req.query.phone
@@ -58,10 +60,11 @@ exports.Farmer = [ async (req, res) => {
     }    
 }]
 
+//Create a new order request
 exports.createOrder = [ async (req, res) => {
     try {
         const { product, phone, region, district, qty, amount, id } = req.body;
-        const order = await Order.findOne({transactionId: id});
+        const order = await Order.findOne({transactionId: id}); // Check if transaction already exist
         if (order) {
             res.status(200).send("Order completed")
         } else {

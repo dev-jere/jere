@@ -1,6 +1,4 @@
 const UssdMenu = require('ussd-menu-builder');
-const _ = require('lodash');
-
 const Order = require('../../models/transaction');
 
 let sessions = {};
@@ -11,7 +9,6 @@ menu.state('home.find', {
         const { val } =menu;
         sessions["ref"] = val;
         menu.con(`Provide Ref Code: `);
-
     },
     next: {
         "*\\w":"home.find.validate"
@@ -32,9 +29,6 @@ menu.state("home.find.validate", {
         } else {
             menu.end("Invalid refcode");
         }
-        
-        
-
     },
     next: {
         "1":"home.find.validate",

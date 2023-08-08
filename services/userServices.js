@@ -8,7 +8,7 @@ const User = require('../models/userModel'); //Admin model
 
 
 //Register a new Admin User
-exports.createUser = [auth, async (req, res, next)=> {
+exports.createUser = [async (req, res, next)=> {
     try {
         const { first_name, last_name, email, password, role } = req.body;
 
@@ -21,7 +21,7 @@ exports.createUser = [auth, async (req, res, next)=> {
             res.send('A user already exsist with this data...');
 
         } else {
-            // Hash Password
+        // Hash Password
         hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({
@@ -43,12 +43,10 @@ exports.createUser = [auth, async (req, res, next)=> {
         res.json({
             data: newUser,
             token
-        })
-        
+        })        
     } 
 } catch (err) {
     next(err);
-
 }
 }]
 
@@ -63,7 +61,6 @@ exports.User =[auth, async (req, res)=> {
     }
 }]
 
-
 exports.login = [async (req, res) => {
     try {
         const {email, password} = req.body;
@@ -71,9 +68,7 @@ exports.login = [async (req, res) => {
         if(!(email && password)) {
             res.status(400).send("All input is required");
         }
-
         const user = await User.findOne({email});
-
         if (user && (await bcrypt.compare(password, user.password))) {
             const token = jwt.sign(
                 {user_id: user._id, email},
@@ -86,8 +81,7 @@ exports.login = [async (req, res) => {
             res.status(200).json({user, token});
         } else {
             res.status(400).send("Invalid Credentials");
-        }
-        
+        }        
     } catch(err) {
         console.log(err);
     }

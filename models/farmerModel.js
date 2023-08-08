@@ -16,6 +16,14 @@ const Farmer = new mongoose.Schema({
         required: false,
         type: String
     },
+    farmsize: {
+        required: false,
+        type: String
+    },
+    crops: {
+        required: false,
+        type: String
+    },
     phone: {
         required: true,
         type: Number

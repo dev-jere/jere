@@ -31,7 +31,7 @@ module.exports = menu => {
                 val
             } = menu;
             sessions["surname"] = val;
-            menu.con(`Enter your State or residence:`);             
+            menu.con(`Enter your Region:`);             
         },
         next: {
             "*\\w": "home.register.lga",
@@ -44,7 +44,7 @@ module.exports = menu => {
                 val
             } = menu;
             sessions["state"] = val;
-            menu.con(`Enter LGA:`+
+            menu.con(`Enter Town/City:`+
             `\n0. Go Back`);             
         },
         next: {
@@ -71,7 +71,7 @@ module.exports = menu => {
                     first_name, last_name, phone, state, lga
                 })
                 await newFarmer.save()
-                menu.end(`Welcome to Nakore`+
+                menu.end(`Registration Successful Welcome to Jere`+
             `\n ${first_name}`);
             }catch(err){
                 console.log(err);
