@@ -9,7 +9,7 @@ const Farmer = new mongoose.Schema({
         type: String
     },
     region: {
-        required: false,
+        required: true,
         type: String
     },
     district: {
@@ -17,8 +17,8 @@ const Farmer = new mongoose.Schema({
         type: String
     },
     farmsize: {
-        required: false,
-        type: String
+        required: true,
+        type: Number
     },
     crops: {
         required: false,
