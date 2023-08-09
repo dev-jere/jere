@@ -85,3 +85,27 @@ exports.createOrder = [ async (req, res) => {
         console.log(err);
     }
 }]
+
+
+//Get Total Land Hectarage
+exports.totalLandSize = [ async (req, res) => {
+    try {
+        const landSummation = await Farmer.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    totalSum: { $sum: '$farmsize'},
+                },
+            },
+        ]);
+        if (landSummation.length === 0) {
+            return res.status(404).json({ error: 'No data found'});
+        }
+
+        const totalSum = landSummation[0].totalSum;
+        res.json({ totalSum});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error'});
+    }
+}]

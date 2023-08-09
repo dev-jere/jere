@@ -7,5 +7,6 @@ router.post('/register', farmerController.createFarmer);
 router.get('/getfarmers', farmerController.getFarmers);
 router.get('/farmer', farmerController.Farmer);
 router.post('/buy', farmerController.createOrder);
+router.get('/landtotal', farmerController.totalLandSize);
 
 module.exports = router;
