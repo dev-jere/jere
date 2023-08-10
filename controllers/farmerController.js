@@ -8,5 +8,6 @@ router.get('/getfarmers', farmerController.getFarmers);
 router.get('/farmer', farmerController.Farmer);
 router.post('/buy', farmerController.createOrder);
 router.get('/landtotal', farmerController.totalLandSize);
+router.get('/totalFarmers', farmerController.totalFarmers);
 
 module.exports = router;

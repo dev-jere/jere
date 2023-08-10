@@ -86,6 +86,17 @@ exports.createOrder = [ async (req, res) => {
     }
 }]
 
+//Get Total Numbe of Farmers Registered
+exports.totalFarmers = [ async (req, res) => {
+    try {
+        const farmerSummation = await Farmer.countDocuments();
+        res.json({ farmerSummation });
+    }catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Ínternal server error'});
+    }
+
+}]
 
 //Get Total Land Hectarage
 exports.totalLandSize = [ async (req, res) => {
