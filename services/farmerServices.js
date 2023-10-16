@@ -1,7 +1,9 @@
 /**
  * This is the farmer service
  */
-const Farmer = require('../models/farmerModel'); //Farmer model
+const Ngfarmers = require('../models/Ngfarmers');
+//const Farmer = require('../models/Ngfarmers'); //Farmer model
+
 const Order = require('../models/transaction')
 
 function refCode(length, chars) {
@@ -13,16 +15,20 @@ function refCode(length, chars) {
 //Register a new Farmer for USSD Access
 exports.createFarmer = [async (req, res)=> {
     try {
-        const { first_name, last_name, region, district, phone, pin } = req.body;
-        const farmer = await Farmer.findOne({phone: phone}); //Checking database if user already exists
+        const { first_name, last_name, state, lga, phone, nin, farmsize, crops, group, pin } = req.body;
+        const farmer = await Ngfarmers.findOne({phone: phone}); //Checking database if user already exists
 
         if (!farmer) {
-            const newFarmer = new Farmer({
+            const newFarmer = new Ngfarmers({
                 first_name,
                 last_name,
                 phone,
-                region,
-                district,
+                state,
+                farmsize,
+                crops,
+                group,
+                lga,
+                nin,
                 pin
             });
             await newFarmer.save();
@@ -40,7 +46,7 @@ exports.createFarmer = [async (req, res)=> {
 //Get a list of registered farmers
 exports.getFarmers = [ async (req, res) => {
     try {
-        const farmers = await Farmer.find({})
+        const farmers = await Ngfarmers.find({})
         res.status(200).json(farmers)
     } catch (err) {
         console.log(err);
