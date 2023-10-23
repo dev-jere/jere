@@ -8,7 +8,7 @@ const Agent = new mongoose.Schema({
         required: true,
         type: String
     },
-    state: {
+    state_of_operation: {
         required: false,
         type: String
     },
@@ -20,11 +20,15 @@ const Agent = new mongoose.Schema({
         required: true,
         type: Number
     },
-    pin: {
-        type: Number,
-        required: false,
-        default: '0000'
-    }
+    groups: {
+        type: String,
+        required: true,
+    },
+    userId: {
+        type: String,
+        ref: "users",
+        required: true,
+    },
 });
 
 module.exports = mongoose.model("Agent", Agent);

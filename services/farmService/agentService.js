@@ -4,26 +4,26 @@
 const Order = require('../../models/transaction');
 const Agent = require('../../models/agentModel');
 
-
 //Agent Initial onboarding logic
-exports.createAgent = [ async (req, res) => {
-    const {first_name, last_name, phone, state, lga, pin} = req.body
+exports.createAgent = [ async (req, res) => {    
+    const {first_name, last_name, phone, state_of_operation, groups, lga} = req.body
     const agent = await Agent.findOne({phone: phone});
     if (agent) {
-        res.status(401).send("Agent with this phone number already exsist")
+        res.status(401).send("Agent already exsist")
     } else {
         const newAgent = new Agent({
             first_name,
             last_name,
             phone,
-            state,
+            state_of_operation,
             lga,
-            pin,
+            groups
         })
         await newAgent.save()
         res.status(201).send("Agent added successfully");
     }
 }]
+
 // Transaction confirmation for cash order completion logic
 exports.agentConfirmCashPayment = [ async (req, res) => {
     const { id, status} = req.body;
