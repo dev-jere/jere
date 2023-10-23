@@ -1,3 +1,4 @@
+// Farmer Database Model
 const mongoose = require("mongoose");
 const Farmer = new mongoose.Schema({
     first_name: {
@@ -28,11 +29,7 @@ const Farmer = new mongoose.Schema({
         required: true,
         type: Number
     },
-    pin: {
-        type: Number,
-        required: false,
-        default: '0000'
-    }
-});
+    
+}, { timestamps: true});
 
 module.exports = mongoose.model("Farmer", Farmer);
