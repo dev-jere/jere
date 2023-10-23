@@ -1,13 +1,13 @@
 const UssdMenu = require('ussd-menu-builder');
 const _ = require('lodash');
 
-const seeds = require('../ussdfront/dashboard/seeds');
+const seeds = require('../../ussdfront/dashboard/seeds');
 //const settings = require('../ussdfront/dashboard/setting');
-const chemical = require('../ussdfront/dashboard/chemical');
-const fertilizer = require('../ussdfront/dashboard/fertilizer');
-const register = require('../ussdfront/dashboard/register');
+const chemical = require('../../ussdfront/dashboard/chemical');
+const fertilizer = require('../../ussdfront/dashboard/fertilizer');
+const register = require('../../ussdfront/dashboard/register');
 
-const Farmer = require('../models/farmerModel');
+const Farmer = require('../../models/farmerModel');
 const menu = new UssdMenu();
 
 menu.startState({

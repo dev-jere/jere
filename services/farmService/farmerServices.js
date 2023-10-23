@@ -1,10 +1,10 @@
 /**
  * This is the farmer service
  */
-const Ngfarmers = require('../models/Ngfarmers');
+const Ngfarmers = require('../../models/Ngfarmers');
 //const Farmer = require('../models/Ngfarmers'); //Farmer model
 
-const Order = require('../models/transaction')
+const Order = require('../../models/transaction')
 
 function refCode(length, chars) {
     let result = '';

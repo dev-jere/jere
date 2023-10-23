@@ -1,8 +1,8 @@
 /**
  * This is the agent/retailer service
  */
-const Order = require('../models/transaction');
-const Agent = require('../models/agentModel');
+const Order = require('../../models/transaction');
+const Agent = require('../../models/agentModel');
 
 
 //Agent Initial onboarding logic

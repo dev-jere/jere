@@ -1,7 +1,7 @@
 //Import Transaction Models
 //import { result } from 'lodash'
 const { date } = require('joi')
-const transactions = require ('../models/transaction')
+const transactions = require ('../../models/transaction')
 
 exports.monthlyTranactions = [async (req, res) => {
     const info = await transactions.aggregate([

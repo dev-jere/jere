@@ -14,13 +14,13 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-const farmerRoute = require('./controllers/farmerController');
-const ussdMenu = require('./controllers/ussdController');
-const productRoute = require('./controllers/productController');
-const userRoute = require('./controllers/userController');
-const payment = require('./controllers/paymentController');
-const agent = require('./controllers/agentController');
-const monthly = require('./controllers/transactionController')
+const farmerRoute = require('./controllers/farmControls/farmerController');
+//const ussdMenu = require('./controllers/ussdControls/ussdController');
+//const productRoute = require('./controllers/inventoryControls/productController');
+const userRoute = require('./controllers/farmControls/userController');
+const payment = require('./controllers/transactionControls/paymentController');
+const agent = require('./controllers/farmControls/agentController');
+const monthly = require('./controllers/transactionControls/transactionController')
 
 app.use(helmet());
 app.use(helmet.xssFilter());
@@ -31,12 +31,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 
 app.use('/api', farmerRoute);
-app.use('/api', ussdMenu);
-app.use('/api', productRoute);
+//app.use('/api', ussdMenu);
+//app.use('/api', productRoute);
 app.use('/api', userRoute);
-app.use('/api', payment);
+//app.use('/api', payment);
 app.use('/api', agent);
-app.use('/api', monthly);
+//app.use('/api', monthly);
 
 
 

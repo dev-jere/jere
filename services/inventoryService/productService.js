@@ -1,8 +1,8 @@
 /**
  * This is the product service
  */
-const auth = require('../middleware/auth')
-const Product = require('../models/productModel'); //Farmer model
+const auth = require('../../middleware/auth')
+const Product = require('../../models/productModel'); //Farmer model
 
 
 //Register a new Farmer for USSD Access

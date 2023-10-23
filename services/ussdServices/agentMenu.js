@@ -1,9 +1,9 @@
 const UssdMenu = require('ussd-menu-builder');
 const _ = require('lodash');
 
-const agent =  require("../ussdfront/dashboard/agent");
+const agent =  require("../../ussdfront/dashboard/agent");
 
-const Agent = require("../models/agentModel");
+const Agent = require("../../models/agentModel");
 
 
 const menu = new UssdMenu();

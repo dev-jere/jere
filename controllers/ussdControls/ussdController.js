@@ -1,8 +1,8 @@
 const express = require ('express');
 const router = express.Router();
 
-const ussdMenu = require('../services/ussdMenu');
-const agentMenu = require('../services/agentMenu');
+const ussdMenu = require('../services/ussdServices/ussdMenu');
+const agentMenu = require('../services/ussdServices/agentMenu');
 
 
 router.post('/farmer', ussdMenu.Menu);

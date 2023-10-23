@@ -1,8 +1,8 @@
 
-const Wallet = require("../models/wallet");
-const Farmer = require("../models/farmerModel");
-const WalletTransaction = require("../models/wallet_transaction");
-const Transaction = require("../models/transaction");
+const Wallet = require("../../models/wallet");
+const Farmer = require("../../models/farmerModel");
+const WalletTransaction = require("../../models/wallet_transaction");
+const Transaction = require("../../models/transaction");
 const Flutterwave = require("flutterwave-node-v3"); 
 
 const { v4: uuidv4 } = require('uuid');

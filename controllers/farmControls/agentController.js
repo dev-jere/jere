@@ -1,7 +1,7 @@
 const express = require ('express');
 const router = express.Router();
 
-const Agent = require('../services/agentService');
+const Agent = require('../../services/farmService/agentService');
 
 router.post('/confirmCash', Agent.agentConfirmCashPayment);
 router.post('/addagent', Agent.createAgent);

@@ -1,4 +1,4 @@
-const transaction = require("../models/transaction");
+const transaction = require("../../models/transaction");
 const axios = require("axios")
 const { v4: uuidv4 } = require('uuid');
 const { response } = require("express");
