@@ -21,13 +21,11 @@ const Farmers = new mongoose.Schema({
   farm_size: Number,
   crops: String,
   farmer_bvn: {
-    type: Number,
-    unique: true
+    type: Number,    
   }, 
   farmer_nin: {
     required: true,
     type: Number,
-    unique: true,
   },
   phone: {
     required: true,
@@ -40,6 +38,10 @@ const Farmers = new mongoose.Schema({
   status_id: {
     type: mongoose.Schema.Types.ObjectId,    
     ref: "farmer_activity",
+  },
+  photo: {
+    type: String,
+    required: false
   }
 }, 
 {timestamps: true});

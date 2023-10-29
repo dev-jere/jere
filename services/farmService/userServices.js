@@ -6,6 +6,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../../middleware/auth");
 const User = require("../../models/userModel");
+const Photo = require("../../models/photo");
+const {uploadToCloudinary} = require('../../services/farmService/cloudinary');
+const upload = require('../../middleware/multer');
+
 
 //Register a new User
 exports.createUser = [
@@ -16,14 +20,12 @@ exports.createUser = [
       if (!(first_name && last_name && email && password)) {
         res.status(400).send("All input is required");
       }
-
       //Checking database if user already exists
       const exists = await User.findOne({ email: email });
       if (exists) {
         res.send("A user already exsist with this data...");
       } else {
         hashedPassword = await bcrypt.hash(password, 10);
-
         const newUser = new User({
           first_name: first_name,
           last_name: last_name,
@@ -33,13 +35,9 @@ exports.createUser = [
         });
         //Create token
         const token = jwt.sign(
-          {
-            user_id: newUser._id,
-          },
+          {id: newUser._id},
           process.env.TOKEN,
-          {
-            expiresIn: "1h",
-          }
+          {expiresIn: "1h"}
         );    
         newUser.token = token;
         await newUser.save();
@@ -121,3 +119,22 @@ exports.userLogin = [
     }
   },
 ];
+
+
+exports.photoUpload = [ upload.single('farmerImage'),
+  async(req,res) => {
+    try {
+        const result = await uploadToCloudinary(req.file.path, "farmerImage");
+        const newUser = new Photo({
+            name: req.body.name,
+            email: req.body.email,
+            photo: result.url,
+        });
+        await newUser.save();
+        res.status(201).json(newUser);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({error: 'Error creating user'})
+    }
+}
+]

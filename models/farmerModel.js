@@ -1,4 +1,5 @@
 // Farmer Database Model
+const { string } = require("joi");
 const mongoose = require("mongoose");
 const Farmer = new mongoose.Schema({
     first_name: {
@@ -29,6 +30,10 @@ const Farmer = new mongoose.Schema({
         required: true,
         type: Number
     },
+    photo: {
+        required: false,
+        type: String
+    }
     
 }, { timestamps: true});
 

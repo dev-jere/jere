@@ -2,8 +2,9 @@
  * This is the farmer service
  */
 const nigeria_farmers = require("../../models/nigeria_farmers");
-const farmer_group = require("../../models/groupModel")
-//const Farmer = require('../models/Ngfarmers'); //Farmer model
+const farmer_group = require("../../models/groupModel");
+const {uploadToCloudinary} = require('../../services/farmService/cloudinary');
+const upload = require('../../middleware/multer');
 
 const Order = require("../../models/transaction");
 
@@ -15,32 +16,27 @@ function refCode(length, chars) {
 }
 
 //Register a new Farmer for USSD Access
-exports.createFarmer = [
+exports.createFarmer = [ upload.single('farmerImage'),
   async (req, res) => {
     try {
       const {
-        first_name,
-        last_name,
-        state,
-        lga,
-        phone,
-        farmer_nin,
-        farm_size,
-        crops,
-      } = req.body;
+        first_name, last_name, state,lga,phone,farmer_nin,farm_size,farmer_bvn,crops} = req.body;
+      const imageData = await uploadToCloudinary(req.file.path, "farmerImage");
+
       //Checking database if user already exists
       const farmer = await nigeria_farmers.findOne({ farmer_nin });
       if (!farmer) {
         const newFarmer = new nigeria_farmers({
           farmer_nin,
           farm_size,
+          farmer_bvn,
           first_name,
           last_name,
           phone,
           state,
           crops,
           lga,
-
+          photo: imageData.url
         });
         await newFarmer.save();
         res.status(201).send("Farmer registered successfully.");
@@ -58,7 +54,7 @@ exports.createFarmer = [
   },
 ];
 
-//Get a list of registered farmers
+//Get list of all registered farmers
 exports.getAllFarmers = [
   async (req, res) => {
     try {
@@ -140,7 +136,7 @@ exports.totalFarmers = [
       res.json({ farmerSummation });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Ínternal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   },
 ];
@@ -172,25 +168,24 @@ exports.totalLandSize = [
 
 //Create Farmer Group
 exports.createGroup = [
-    async(req, res) => {
-        try {
-            const {group_name, state, lga, contribution} = req.body
-            const group = await farmer_group.findOne({group_name});
-            if (group){
-                res.status(400).send('Group name already in database');
-               
-            } else {
-                const new_group = new farmer_group({
-                    group_name,
-                    state,
-                    lga,
-                    contribution
-                });
-                await new_group.save();
-                res.status(201).send("New group added!");
-            }
-        } catch (error) {
-            res.status(500).json(error);
-        }
+  async (req, res) => {
+    try {
+      const { group_name, state, lga, contribution } = req.body;
+      const group = await farmer_group.findOne({ group_name });
+      if (group) {
+        res.status(400).send("Group name already in database");
+      } else {
+        const new_group = new farmer_group({
+          group_name,
+          state,
+          lga,
+          contribution,
+        });
+        await new_group.save();
+        res.status(201).send("New group added!");
+      }
+    } catch (error) {
+      res.status(500).json(error);
     }
-]
+  },
+];
