@@ -9,7 +9,7 @@ router.post('/login', userController.userLogin);
 router.get('/getusers', userController.getAllUsers);
 // Search for User with email.
 router.get('/getuser', userController.getUser);
-router.post('/upload', userController.photoUpload);
+
 
 
 module.exports = router;

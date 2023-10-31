@@ -6,9 +6,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../../middleware/auth");
 const User = require("../../models/userModel");
-const Photo = require("../../models/photo");
-const {uploadToCloudinary} = require('../../services/farmService/cloudinary');
-const upload = require('../../middleware/multer');
 
 
 //Register a new User
@@ -119,22 +116,3 @@ exports.userLogin = [
     }
   },
 ];
-
-
-exports.photoUpload = [ upload.single('farmerImage'),
-  async(req,res) => {
-    try {
-        const result = await uploadToCloudinary(req.file.path, "farmerImage");
-        const newUser = new Photo({
-            name: req.body.name,
-            email: req.body.email,
-            photo: result.url,
-        });
-        await newUser.save();
-        res.status(201).json(newUser);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({error: 'Error creating user'})
-    }
-}
-]
