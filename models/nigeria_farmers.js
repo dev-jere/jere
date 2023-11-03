@@ -31,13 +31,14 @@ const Farmers = new mongoose.Schema({
     required: true,
     type: Number,    
   },
-  group_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "group",
+  group: {
+    type: String,
+    
   },
-  status_id: {
-    type: mongoose.Schema.Types.ObjectId,    
-    ref: "farmer_activity",
+  status: {
+    type: String,
+    enum: ['unverified', 'verifying', 'verified'],
+    default: "unverified"
   },
   photo: {
     type: String,

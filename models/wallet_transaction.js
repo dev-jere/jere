@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const walletTransactionSchema = new mongoose.Schema(
     {
         amount: {type: Number, default: 0},
-
         userId: {
             type: String,
             ref: "users",

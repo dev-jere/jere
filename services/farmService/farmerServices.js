@@ -19,50 +19,24 @@ function refCode(length, chars) {
 exports.createFarmer = [ upload.single('farmerImage'),
   async (req, res) => {
     try {
-      const {first_name, last_name, state,lga,phone,farmer_nin,farm_size,farmer_bvn,crops} = req.body;
-      
-      //Upload Photo to Cloudinary
-      const imageData = await uploadToCloudinary(req.file.path, "farmerImage");
-      if (imageData) {
-        //Checking database if user already exists
-        const farmer = await nigeria_farmers.findOne({ farmer_nin });
-        if(!farmer) {
-          const newFarmer = new nigeria_farmers({
-            farmer_nin,
-            farm_size,
-            farmer_bvn,
-            first_name,
-            last_name,
-            phone,
-            state,
-            crops,
-            lga,
-            photo: imageData.url
-          });
-          await newFarmer.save();
-          res.status(201).send("Farmer registered without photo");
-        } else {
-          res.status(400).send("A farmer already exsist with this information");
-        }
-                
+      const {first_name, last_name, state,lga,phone,farmer_nin,farm_size,crops} = req.body;
+      //Checking database if user already exists
+      const farmer = await nigeria_farmers.findOne({ farmer_nin });
+      if(!farmer) {
+        const newFarmer = new nigeria_farmers({
+          farmer_nin,
+          farm_size,
+          first_name,
+          last_name,
+          phone,
+          state,
+          crops,
+          lga
+        });
+        await newFarmer.save();
+        res.status(201).send("Farmer registered without photo");
       } else {
-        const farmer = await nigeria_farmers.findOne({ farmer_nin });
-        if (!farmer) {
-          const newFarmer = new nigeria_farmers({
-            farmer_nin,
-            farm_size,
-            farmer_bvn,
-            first_name,
-            last_name,
-            phone,
-            state,
-            crops,
-            lga,          
-          }); 
-          await newFarmer.save();
-          res.status(201).send("Farmer registered successfully.");
-        }
-        
+        res.status(400).send("A farmer already exsist with this information");
       }
       
     } catch (err) {
