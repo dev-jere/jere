@@ -145,7 +145,7 @@ exports.totalLandSize = [
         {
           $group: {
             _id: null,
-            totalSum: { $sum: "$farmsize" },
+            totalSum: { $sum: "$farm_size" },
           },
         },
       ]);
