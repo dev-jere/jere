@@ -16,7 +16,7 @@ const port = process.env.PORT || 3000;
 
 //Controller Sections +++++++++++++++++++++
 const farmerRoute = require('./controllers/farmControls/farmerController');
-//const ussdMenu = require('./controllers/ussdControls/ussdController');
+const ussdMenu = require('./controllers/ussdControls/ussdController');
 //const productRoute = require('./controllers/inventoryControls/productController');
 const userRoute = require('./controllers/farmControls/userController');
 const payment = require('./controllers/transactionControls/paymentController');
@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 //Application Routing Section +++++++++++++
 app.use('/api', farmerRoute);
-//app.use('/api', ussdMenu);
+app.use('/api', ussdMenu);
 //app.use('/api', productRoute);
 app.use('/api', userRoute);
 //app.use('/api', payment);

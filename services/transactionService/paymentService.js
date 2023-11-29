@@ -2,8 +2,8 @@ const transaction = require("../../models/transaction");
 const axios = require("axios")
 const { v4: uuidv4 } = require('uuid');
 const { response } = require("express");
-//Paystack Integration
 
+//Paystack Integration
 exports.paystackBank = [ async(req, res) => {
     try {        
         const url = `https://api.paystack.co/transaction/initialize`

@@ -1,11 +1,25 @@
-const Farmer = require("../../models/farmerModel");
+const Farmer = require("../../models/nigeria_farmers");
 
 let sessions = {};
 
 module.exports = menu => {
     menu.state("home.register", {
         run: async () => {
-            menu.con(`Enter your Firstname:`);             
+            
+            menu.con(`Enter your NIN:`);             
+        },
+        next: {
+            "*\\w": "home.register.nin",
+        },
+        defaultNext: "invalidOption",
+    });
+    menu.state("home.register.nin", {
+        run: async () => {
+            const {
+                val
+            } = menu;
+            sessions["nin"] = val;
+            menu.con(`Enter your Surname:`);             
         },
         next: {
             "*\\w": "home.register.surname",
@@ -17,8 +31,8 @@ module.exports = menu => {
             const {
                 val
             } = menu;
-            sessions["firstname"] = val;
-            menu.con(`Enter your Surname:`);             
+            sessions["surname"] = val;
+            menu.con(`Enter your Firstname:`);             
         },
         next: {
             "*\\w": "home.register.state",
@@ -30,8 +44,8 @@ module.exports = menu => {
             const {
                 val
             } = menu;
-            sessions["surname"] = val;
-            menu.con(`Enter your Region:`);             
+            sessions["firstname"] = val;
+            menu.con(`Enter State:`);             
         },
         next: {
             "*\\w": "home.register.lga",
@@ -44,7 +58,7 @@ module.exports = menu => {
                 val
             } = menu;
             sessions["state"] = val;
-            menu.con(`Enter Town/City:`+
+            menu.con(`Enter Local Govt. Area:`+
             `\n0. Go Back`);             
         },
         next: {
@@ -58,7 +72,7 @@ module.exports = menu => {
             const {
                 val
             } = menu;
-            sessions["district"] = val;
+            sessions["lga"] = val;
             menu.con(`Enter farm size (arces):`+
             `\n0. Go Back`);             
         },
@@ -75,16 +89,17 @@ module.exports = menu => {
                 args: { phoneNumber },
             } = menu;
             sessions["size"] = val;
-            const first_name = sessions.firstname;
-            const last_name = sessions.surname;
-            const region = sessions.state;
-            const district = sessions.district;
+            const first_name = sessions.surname;
+            const last_name = sessions.firstname;
+            const state = sessions.state;
+            const lga = sessions.lga;
             const farmsize = sessions.size;
             const phone = phoneNumber;
+            const farmer_nin = sessions.nin;
 
             try{
                 const newFarmer = new Farmer({
-                    first_name, last_name, phone, region, district, farmsize
+                    farmer_nin, last_name, first_name, phone, state, lga, farmsize
                 })
                 await newFarmer.save()
                 menu.end(`Registration Successful Welcome to Jere`+
@@ -93,7 +108,7 @@ module.exports = menu => {
                 console.log(err);
                 menu.end(`Registration failed`);
             }
-            console.log(first_name, last_name, district, region, phoneNumber, farmsize);
+            console.log(last_name, first_name, state, lga, phoneNumber, farmsize);
                          
         },
         next: {

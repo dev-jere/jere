@@ -1,5 +1,5 @@
 const Products = require ('../../models/productModel');
-const ProductService = require('../../services/productService');
+//const ProductService = require('../../services/productService');
 
 module.exports = menu => {
     menu.state("home.fertilizer", {

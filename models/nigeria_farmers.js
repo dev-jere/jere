@@ -32,8 +32,7 @@ const Farmers = new mongoose.Schema({
     type: Number,    
   },
   group: {
-    type: String,
-    
+    type: String,    
   },
   status: {
     type: String,
