@@ -6,11 +6,16 @@ const farmer_activity = mongoose.Schema({
         required: true,
         ref: "farmers",
     },
-    status: {
+    activity: {
+        type: String,
+        required: true
+    },
+    description: {
         required: true,
         type: String
     }
-}, {
+}, 
+{
     timestamps: true
 })
 
