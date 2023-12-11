@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const farmer_activity = mongoose.Schema({
     farmer_id: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "farmers",
     },

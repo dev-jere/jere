@@ -66,13 +66,14 @@ exports.getAllFarmers = [
 exports.getFarmer = [
   async (req, res) => {
     try {
-      const farmer_nin = req.body.farmer_nin;
-      if (!farmer_nin) {
-        res.status(401).send("Please provide Farmer NIN.");
-      } else {
-        const farmer = await nigeria_farmers.findOne({ farmer_nin });
-        res.status(200).json(farmer);
-      }
+      const nin = req.query.nin;      
+        const farmer = await nigeria_farmers.findOne({farmer_nin: nin});
+        if(!farmer){
+          res.status(500).json("Farmer does not exsist");
+        } else {
+          res.status(200).json(farmer); 
+        }
+             
     } catch (err) {
       res.status(500).send("Experiencing some network issue, try again later");
     }

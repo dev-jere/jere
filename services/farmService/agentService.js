@@ -3,6 +3,7 @@
  */
 const Order = require('../../models/transaction');
 const Agent = require('../../models/agentModel');
+const Farm_Activity = require('../../models/farmer_activity');
 
 //Agent Initial onboarding logic
 exports.createAgent = [ async (req, res) => {    
@@ -46,5 +47,28 @@ exports.checkOrder = [ async (req, res) => {
         res.status(200).json({'order': order});
     } else {
         res.status(400).send(`Order ${id} not found`);
+    }
+}]
+
+//Farmer Activity Creation
+exports.activities = [ async (req, res) => {
+    try {
+        const { activity, description, farmer_id } = req.body;
+        const farm = new Farm_Activity({activity, description, farmer_id})
+        await farm.save();
+        res.status(201).json(farm);
+    } catch (err) {
+        res.status(400).json({ error: err.message});
+    }
+}]
+
+//Get Farmer Activities
+exports.get_farmers_activities = [async (req, res) => {
+    try {
+        const {farmer_id} = req.params;
+        const activities = await Farm_Activity.find(farmer_id);
+        res.json(activities);
+    } catch (err) {
+        res.status(500).json({error: err.message});
     }
 }]
