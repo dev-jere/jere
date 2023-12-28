@@ -4,6 +4,13 @@
 const auth = require('../../middleware/auth')
 const Product = require('../../models/productModel'); //Farmer model
 
+//Product Barcode
+function barCode(length, chars) {
+    let result = "";
+    for (let i = length; i > 0; --i)
+      result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
 
 //Register a new Farmer for USSD Access
 exports.createProduct = [async (req, res)=> {
@@ -20,7 +27,7 @@ exports.createProduct = [async (req, res)=> {
                 description,
                 quantity,
                 category,
-                barcode,
+                barcode: barCode(11, "023478FERT"),
                 price,
                 supplier_price
             });

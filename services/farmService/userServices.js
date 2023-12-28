@@ -103,7 +103,7 @@ exports.userLogin = [
           { user_id: user._id, email },
           process.env.TOKEN,
           {
-            expiresIn: 86400,
+            expiresIn: 43200,
           }
         );
         user.token = token;

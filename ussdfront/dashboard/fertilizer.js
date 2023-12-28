@@ -26,7 +26,7 @@ module.exports = menu => {
     menu.state('home.fertilizer.super', {
         run: async () => {
             const input = await Products.find({category: "Fertilizer"});
-            let fertilizer =[];
+            let fertilizer = [];
             for(let i=0; i< input.length; i++){
                 fertilizer.push(input[i]["title"]);
             }

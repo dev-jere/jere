@@ -3,7 +3,6 @@
 Welcome to the main entry into Jèrè Business Logic
 */
 
-
 require('dotenv').config(); //Environment Varialble Management 
 require('./config/db').connect(); //Database Connection
 const express = require('express'); //Express Server
@@ -17,7 +16,7 @@ const port = process.env.PORT || 3000;
 //Controller Sections +++++++++++++++++++++
 const farmerRoute = require('./controllers/farmControls/farmerController');
 const ussdMenu = require('./controllers/ussdControls/ussdController');
-//const productRoute = require('./controllers/inventoryControls/productController');
+const productRoute = require('./controllers/inventoryControls/productController');
 const userRoute = require('./controllers/farmControls/userController');
 const payment = require('./controllers/transactionControls/paymentController');
 const agent = require('./controllers/farmControls/agentController');
@@ -36,7 +35,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 //Application Routing Section +++++++++++++
 app.use('/api', farmerRoute);
 app.use('/api', ussdMenu);
-//app.use('/api', productRoute);
+app.use('/api', productRoute);
 app.use('/api', userRoute);
 //app.use('/api', payment);
 app.use('/api', agent);

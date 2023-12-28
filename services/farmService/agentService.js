@@ -63,7 +63,7 @@ exports.activities = [ async (req, res) => {
 }]
 
 //Get Farmer Activities
-exports.get_farmers_activities = [async (req, res) => {
+exports.get_farmer_activities = [async (req, res) => {
     try {
         const {farmer_id} = req.params;
         const activities = await Farm_Activity.find(farmer_id);

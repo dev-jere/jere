@@ -7,7 +7,7 @@ router.post('/confirmCash', Agent.agentConfirmCashPayment);
 router.post('/addagent', Agent.createAgent);
 router.get('/orderstatus', Agent.checkOrder);
 router.post('/activity', Agent.activities);
-router.get('/activity', Agent.get_farmers_activities)
+router.get('/activity', Agent.get_farmer_activities)
 
 
 module.exports = router;

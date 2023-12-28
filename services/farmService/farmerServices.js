@@ -19,7 +19,7 @@ function refCode(length, chars) {
 exports.createFarmer = [ upload.single('farmerImage'),
   async (req, res) => {
     try {
-      const {first_name, last_name, state,lga,phone,farmer_nin,farm_size,crops} = req.body;
+      const {first_name, last_name, state, lga, phone, farmer_nin, farm_size, crops} = req.body;
       //Checking database if user already exists
       const farmer = await nigeria_farmers.findOne({ farmer_nin });
       if(!farmer) {
