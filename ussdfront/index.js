@@ -1,6 +1,6 @@
 const UssdMenu = require('ussd-menu-builder');
 
-const Farmer = require('../models/farmerModel');
+const Farmer = require('../models/nigeria_farmers');
 const menu = new UssdMenu();
 const index = () => {
 menu.startState('home', {
@@ -32,6 +32,5 @@ menu.startState('home', {
     });
     return menu;
 }
-
 
 module.exports = index;

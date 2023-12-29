@@ -27,7 +27,7 @@ exports.createProduct = [async (req, res)=> {
                 description,
                 quantity,
                 category,
-                barcode: barCode(11, "023478FERT"),
+                barcode: barCode(11, "023478JERAGTCH"),
                 price,
                 supplier_price
             });

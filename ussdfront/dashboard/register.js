@@ -93,13 +93,13 @@ module.exports = menu => {
             const last_name = sessions.firstname;
             const state = sessions.state;
             const lga = sessions.lga;
-            const farmsize = sessions.size;
+            const farm_size = sessions.size;
             const phone = phoneNumber;
             const farmer_nin = sessions.nin;
 
             try{
                 const newFarmer = new Farmer({
-                    farmer_nin, last_name, first_name, phone, state, lga, farmsize
+                    farmer_nin, last_name, first_name, phone, state, lga, farm_size
                 })
                 await newFarmer.save()
                 menu.end(`Registration Successful Welcome to Jere`+
@@ -108,7 +108,7 @@ module.exports = menu => {
                 console.log(err);
                 menu.end(`Registration failed`);
             }
-            console.log(last_name, first_name, state, lga, phoneNumber, farmsize);
+            console.log(last_name, first_name, state, lga, phoneNumber, farm_size);
                          
         },
         next: {
